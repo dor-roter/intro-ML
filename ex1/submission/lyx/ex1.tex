@@ -1,0 +1,208 @@
+%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{luainputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1cm,lmargin=1cm,rmargin=1cm}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newlength{\lyxlabelwidth}      % auxiliary length 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{culmus}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{\textbf{\uline{Introduction to Machine Learning (67577)}}}
+\author{\textbf{Exrecise 1}\\
+\textbf{Mathematical Background}}
+\maketitle
+
+\section{Theoretical}
+
+\subsection{Linear Algebra}
+
+\subsubsection{Recap}
+\begin{enumerate}
+\item $p=\frac{\left\langle v|w\right\rangle }{||w||^{2}}\cdot w=\frac{-2+3+8}{\sqrt{6}^{2}}\cdot$$\begin{pmatrix}0\\
+-1\\
+1\\
+2
+\end{pmatrix}=\frac{3}{2}w=\begin{pmatrix}0 & -\frac{3}{2} & \frac{3}{2} & 3\end{pmatrix}^{T}$ 
+\item $p=\frac{\left\langle v|w\right\rangle }{||w||^{2}}\cdot w=\frac{1+3-4}{||w||^{2}}=\begin{pmatrix}0 & 0 & 0 & 0\end{pmatrix}$
+\item \uline{}
+\begin{itemize}
+\item \uline{``\mbox{$\Rightarrow$}'':} 
+\begin{align*}
+ & \text{let }0\neq v,w\in\mathbb{R}^{m}\text{so that }v\perp w\:(\theta=\pm90^{\circ})\\
+\Rightarrow & \left\langle v|w\right\rangle =||u||\cdot||w||\cdot cos\left(\theta\right)=||u||\cdot||w||\cdot0=0\\
+ & \left\langle v|w\right\rangle :=u^{T}w=0\quad\square
+\end{align*}
+\item \uline{``\mbox{$\Leftarrow$}'':} 
+\begin{align*}
+ & v^{T}w=:\left\langle v|w\right\rangle =0\\
+ & \left\langle v|w\right\rangle =||u||\cdot||w||\cdot cos\left(\theta\right)=0\\
+ & \text{v, w are non-zero by def \ensuremath{\Rightarrow}}cos(\theta)=0\\
+\Rightarrow & \theta=\pm90^{\circ}\:\square
+\end{align*}
+\end{itemize}
+\item let $A$ be the corresponding matrix for $T:V\rightarrow W$ (a linear
+transforamtion), so that $A$ is an orthogonal matrix, of size $n\times n$.\\
+\begin{align*}
+||Ax|| & =\sqrt{\left\langle Ax|Ax\right\rangle }\underset{def}{=}\sqrt{\left(Ax\right)^{T}\cdot Ax}=\sqrt{x^{T}A^{T}Ax}=\sqrt{x^{T}x}=\\
+ & =\sqrt{\left\langle x|x\right\rangle }=||x||\qquad\square
+\end{align*}
+ \pagebreak{}
+\end{enumerate}
+
+\subsubsection{Singular Value Decomposition}
+\begin{enumerate}[resume]
+\item let $A$ be an inversable matrix ($\Rightarrow A\in\mathbb{R}^{n\times n}$)
+.\\
+$A=U\Sigma V^{T}$ ($A$'s SVD decomposition)\\
+let $B=V\Sigma^{-1}U^{T}$ $\Rightarrow$ $A\cdot B=B\cdot A=I_{n}$\\
+ $U,V$ are orthogonal and therefore $\begin{array}{c}
+UU^{T}=U^{T}U=I_{n}\\
+VV^{T}=V^{T}V=I_{n}
+\end{array}$ \\
+$\Rightarrow$ $A\cdot B=U\Sigma V^{T}\cdot V\Sigma^{-1}U^{T}=U\Sigma I\Sigma^{-1}U^{T}=UIU^{T}=I_{n}$
+\\
+since $\Sigma$ is diagonal and non-zero (else $A=0$ which is not
+inversable), $\Sigma^{-1}$can easiliy be calcualted as well by inversing
+the singular value on the diagonal as: \\
+\begin{align*}
+ & \Sigma=diag\left(\sigma_{1},...,\sigma_{n}\right)\\
+\Rightarrow & \Sigma^{-1}=diag\left(\sigma_{1}^{-1},...,\sigma_{n}^{-1}\right)
+\end{align*}
+ knowing the SVD of a matrix therefore enables us to find its inverse
+or even determine if the matrix is inversable without the need for
+complicated computations, simply by glancing at the SVD decomposition.
+\item first we'll find $A^{T}A$'s eigenvalues:\\
+\begin{align*}
+ & A^{T}A=\begin{bmatrix}5 & -1\\
+5 & 7
+\end{bmatrix}\cdot\begin{bmatrix}5 & 5\\
+-1 & 7
+\end{bmatrix}=\begin{bmatrix}26 & 18\\
+18 & 74
+\end{bmatrix}\quad\left(\text{symetric \ensuremath{\Rightarrow}the P matrix of the EVD can be orthogonal}\right)\\
+ & det(A^{T}A-\lambda I_{n})=det\left(\begin{bmatrix}26-\lambda & 18\\
+18 & 74-\lambda
+\end{bmatrix}\right)=0\\
+\Rightarrow & \lambda^{2}-100\lambda+1600=0\Rightarrow(\lambda-80)(\lambda-20)=0\\
+\Rightarrow & \lambda_{1}=80,\lambda_{2}=20
+\end{align*}
+ no we can compute the eigenvectors corresponding to those: 
+\begin{align*}
+ & A^{T}A-80I=\begin{bmatrix}-54 & 18\\
+18 & -6
+\end{bmatrix}\Rightarrow\begin{bmatrix}\begin{array}{cc|l}
+-54 & 18 & 0\\
+18 & -6 & 0
+\end{array}\end{bmatrix}\rightarrow\begin{bmatrix}\begin{array}{cc|l}
+1 & -\frac{1}{3} & 0\\
+0 & 0 & 0
+\end{array}\end{bmatrix}\\
+\Rightarrow & x_{1}=1,x_{2}=3\\
+\Rightarrow & v_{1}=\frac{1}{\sqrt{10}}\begin{pmatrix}1\\
+3
+\end{pmatrix}\\
+\\
+ & A^{T}A-20I=\begin{bmatrix}6 & 18\\
+18 & 54
+\end{bmatrix}\Rightarrow\begin{bmatrix}\begin{array}{cc|l}
+6 & 18 & 0\\
+18 & 54 & 0
+\end{array}\end{bmatrix}\rightarrow\begin{bmatrix}\begin{array}{cc|l}
+1 & 3 & 0\\
+0 & 0 & 0
+\end{array}\end{bmatrix}\\
+\Rightarrow & x_{1}=-3,x_{2}=1\\
+\Rightarrow & v_{2}=\frac{1}{\sqrt{10}}\begin{pmatrix}-3\\
+1
+\end{pmatrix}
+\end{align*}
+ Therefore the EVD decomposition of $A^{T}A$ is as such:\\
+\begin{align*}
+P=\frac{1}{\sqrt{10}}\begin{pmatrix}1 & -3\\
+3 & 1
+\end{pmatrix},\quad D=\begin{pmatrix}80\\
+ & 20
+\end{pmatrix},\quad P^{-1}=P^{T}=\frac{1}{\sqrt{10}}\begin{pmatrix}1 & 3\\
+-3 & 1
+\end{pmatrix}
+\end{align*}
+ now, by applying some basic matrix operations using the SVD decomposition
+of $A$ to define $A^{T}A$:\\
+\begin{align*}
+ & A^{T}A=V\Sigma\Sigma^{T}V^{T}\underset{\text{\ensuremath{\Sigma\ }is diagonal}}{=}V\Sigma^{2}V^{T}=PDP^{T}\\
+\Rightarrow & \Sigma=\sqrt{D}=\begin{pmatrix}4\sqrt{5}\\
+ & 2\sqrt{5}
+\end{pmatrix},\quad V^{T}=P^{T}=\frac{1}{\sqrt{10}}\begin{pmatrix}1 & 3\\
+-3 & 1
+\end{pmatrix}
+\end{align*}
+ as $A=U\Sigma V^{T}\underset{\text{multiply by \ensuremath{V}}}{\Leftrightarrow}AV=U\Sigma\underset{\text{multiply by \ensuremath{\Sigma^{-1}}}}{\Leftrightarrow}U=AV\Sigma^{-1}$:\\
+\begin{align*}
+U=\begin{pmatrix}5 & 5\\
+-1 & 7
+\end{pmatrix}\cdot\frac{1}{\sqrt{10}}\begin{pmatrix}1 & -3\\
+3 & 1
+\end{pmatrix}\cdot\frac{1}{\sqrt{5}}\begin{pmatrix}\frac{1}{4}\\
+ & \frac{1}{2}
+\end{pmatrix}=\frac{1}{5\sqrt{2}}\begin{pmatrix}5 & 5\\
+-1 & 7
+\end{pmatrix}\begin{pmatrix}1 & -3\\
+3 & 1
+\end{pmatrix}\begin{pmatrix}\frac{1}{4}\\
+ & \frac{1}{2}
+\end{pmatrix}=\frac{1}{5\sqrt{2}}\begin{pmatrix}20 & -10\\
+20 & 10
+\end{pmatrix}\begin{pmatrix}\frac{1}{4}\\
+ & \frac{1}{2}
+\end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}1 & -1\\
+1 & 1
+\end{pmatrix}
+\end{align*}
+ \\
+Therefore the SVD decomposition of $A$ is $A=\frac{1}{\sqrt{2}}\begin{pmatrix}1 & -1\\
+1 & 1
+\end{pmatrix}\cdot\begin{pmatrix}4\sqrt{5}\\
+ & 2\sqrt{5}
+\end{pmatrix}\cdot\frac{1}{\sqrt{10}}\begin{pmatrix}1 & 3\\
+-3 & 1
+\end{pmatrix}$ $\square$
+\item let $A\in\mathbb{R}^{m\times n},$then $C_{0}=A^{T}A\in\mathbb{R}^{n\times n}$
+a symetric and therfore diagnoizable matrix.\\
+\begin{align*}
+ & \forall k\in\mathbb{N}\quad b_{k+1}=\frac{C_{0}b_{k}}{||C_{0}b_{k}||},\qquad b_{0}=\sum_{i=1}^{n}a_{i}v_{i}=\begin{pmatrix}| &  & |\\
+v_{1} & \cdots & v_{n}\\
+| &  & |
+\end{pmatrix}\begin{pmatrix}a_{1}\\
+\vdots\\
+a_{n}
+\end{pmatrix}
+\end{align*}
+ let us show using induction that for any $k\in\mathbb{N}$ it holds
+that $b_{k}=\frac{C_{0}^{k}b_{0}}{||C_{0}^{k}b_{0}||}$ :
+\begin{itemize}
+\item \textbf{\uline{base}}\textbf{: $b_{1}:=\frac{C_{0}b_{0}}{||C_{0}b_{0}||}=\frac{C_{0}^{1}b_{0}}{||C_{0}^{1}b_{0}||}$}
+\item \textbf{\uline{step}}\textbf{:} let $k\in\mathbb{N}$ s.t $b_{k}=\frac{C_{0}^{k}b_{0}}{||C_{0}^{k}b_{0}||}$,
+then: 
+\begin{align*}
+b_{k+1}:=\frac{C_{0}b_{k}}{||C_{0}b_{k}||}=\frac{C_{0}\cdot\frac{C_{0}^{k}b_{0}}{||C_{0}^{k}b_{0}||}}{||C_{0}\cdot\frac{C_{0}^{k}b_{0}}{||C_{0}^{k}b_{0}||}||}\underset{\text{norm homogeneity}}{=}\frac{\frac{1}{||C_{0}^{k}b_{0}||}\cdot C_{0}^{k+1}b_{0}}{\frac{1}{||C_{0}^{k}b_{0}||}\cdot||C_{0}^{k+1}b_{0}||}=\frac{C_{0}^{k+1}b_{0}}{||C_{0}^{k+1}b_{0}||}
+\end{align*}
+\end{itemize}
+\item  im gere\\
+\end{enumerate}
+
+\end{document}
