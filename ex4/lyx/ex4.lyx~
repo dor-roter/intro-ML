@@ -1,0 +1,2224 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{culmus}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{bbm}
+\end_preamble
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Itemize
+  ItemSep 2
+  ParSep 2
+End
+Style Enumerate
+  ItemSep 10
+  ParSep 2
+End
+Style Enumerate-Resume
+  ItemSep 10
+  ParSep 2
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{%
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+underline{Introduction to Machine Learning (67577)}
+\backslash
+
+\backslash
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+large Exercise 4 - PAC 
+\backslash
+& Ensemble Methods
+\backslash
+
+\backslash
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+
+\series bold
+Dor Roter
+\begin_inset Newline newline
+\end_inset
+
+208772251
+\end_layout
+
+\begin_layout Section
+PAC Learnability
+\end_layout
+
+\begin_layout Enumerate
+Let us show the equivalence holds in both directions:
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+\bar under
+
+\begin_inset Formula $\left(a\right)\Rightarrow\left(b\right)$
+\end_inset
+
+:
+\series default
+\bar default
+ it holds that there exists 
+\begin_inset Formula $m:\left(0,1\right)^{2}\rightarrow\mathbb{N}$
+\end_inset
+
+ such as:
+\series bold
+
+\begin_inset Formula 
+\begin{align*}
+ & \forall\epsilon,\delta>0,\;\forall m\ge m\left(\epsilon,\delta\right)\; & 1-\delta\le\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\epsilon\right]=1-\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right]\\
+ &  & \Leftrightarrow\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right]\le\delta
+\end{align*}
+
+\end_inset
+
+
+\series default
+let 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+since 
+\begin_inset Formula $L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\in\left[0,1\right]$
+\end_inset
+
+ thus 
+\begin_inset Formula $\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]\le1$
+\end_inset
+
+ for any 
+\begin_inset Formula $m\in\mathbb{N}.$
+\end_inset
+
+ As such, assuming 
+\begin_inset Formula $\epsilon\in\left(0,1\right)$
+\end_inset
+
+ it holds that 
+\begin_inset Formula $\forall m\ge m\left(\epsilon,\epsilon\right)=N$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right] & \underset{L_{\mathcal{D}}\left(\cdot\right)\in\left[0,1\right]}{=}\int_{0}^{1}x\cdot\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right]dx=\\
+ & =\int_{0}^{\epsilon}x\cdot\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right]dx+\int_{\epsilon}^{1}x\cdot\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right]dx\le\\
+ & \le\int_{0}^{\epsilon}\epsilon\cdot\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right]dx+\int_{\epsilon}^{1}\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right]dx
+\end{align*}
+
+\end_inset
+
+now, since from monotinicity of the probability function, 
+\begin_inset Formula 
+\begin{align*}
+\forall x\in\left(0,\epsilon\right]\:\left\{ L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right\} \subseteq & \left\{ L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\epsilon\right\} \\
+\forall x\in\left[\epsilon,1\right)\:\left\{ L_{\mathcal{D}}\left(\mathcal{A}(S)\right)=x\right\} \subseteq & \left\{ L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right\} 
+\end{align*}
+
+\end_inset
+
+ since the integral is not effected by a single point chage we are allowed
+ to exclude 
+\begin_inset Formula $\frac{\epsilon}{2}$
+\end_inset
+
+, without effecting the value of the integral: 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right] & \underset{{\scriptscriptstyle monotonicity}}{\le}\int_{0}^{\epsilon}\epsilon\cdot\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\epsilon\right]dx+\int_{\epsilon}^{1}\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right]dx\\
+ & \underset{{\scriptscriptstyle monotonicity}}{\le}\int_{0}^{\epsilon}\epsilon\cdot1dx+\int_{\epsilon}^{1}\epsilon dx=\epsilon^{2}+\left(1-\epsilon\right)\cdot\epsilon=\epsilon
+\end{align*}
+
+\end_inset
+
+ and thus directly by limit's defenition there exists 
+\begin_inset Formula $N\in\mathbb{N}$
+\end_inset
+
+ for any 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+, such that 
+\begin_inset Formula $\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]<\epsilon$
+\end_inset
+
+ and so: 
+\begin_inset Formula $\underset{m\rightarrow\infty}{lim}\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]=0$
+\end_inset
+
+ .
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+\bar under
+
+\begin_inset Formula $\left(b\right)\Rightarrow\left(a\right)$
+\end_inset
+
+:
+\series default
+\bar default
+ let 
+\begin_inset Formula $\epsilon,\delta>0.$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\underset{m\rightarrow\infty}{lim}\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]=0$
+\end_inset
+
+ and thus for any 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ there exists 
+\begin_inset Formula $N\in\mathbb{N}$
+\end_inset
+
+ such that for any 
+\begin_inset Formula $N<m\in\mathbb{N}$
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]<\epsilon$
+\end_inset
+
+, more specifically, there exists 
+\begin_inset Formula $N\in\mathbb{N}$
+\end_inset
+
+ such that for each 
+\begin_inset Formula $N<m\in\mathbb{N}$
+\end_inset
+
+: 
+\begin_inset Formula $\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]<\epsilon\cdot\delta$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+now, as 
+\begin_inset Formula $L_{\mathcal{D}}$
+\end_inset
+
+ is bounded between zero and one, it is surely non-negative, and thus using
+ markov's inequality we note that for any such 
+\begin_inset Formula $N<m\in\mathbb{N}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right]\underset{{\scriptscriptstyle monotonicity}}{\le}\underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\ge\epsilon\right]\underset{{\scriptscriptstyle markov}}{\le}\frac{\mathbb{E}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\right]}{\epsilon}\le\frac{\epsilon\cdot\delta}{\epsilon}=\delta
+\end{align*}
+
+\end_inset
+
+ and thus denoting 
+\begin_inset Formula $m\left(\epsilon,\delta\right)=N$
+\end_inset
+
++1 we achieve the required: 
+\begin_inset Formula 
+\begin{align*}
+\forall\epsilon,\delta>0\;\forall m\ge m\left(\epsilon,\delta\right)\: & \underset{\mathbb{S\sim\mathcal{D}}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)>\epsilon\right]\le\delta\Leftrightarrow1-\delta\le\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\epsilon\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Firstly, let us describe a proposed ERM algorithm for learning of 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Learner for 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+-provided a training set 
+\begin_inset Formula $\mathcal{S}=\left\{ \left(x,y\right)\right\} ^{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+find 
+\begin_inset Formula $\hat{r}=\underset{\left(x,y\right)\in\mathcal{S},\:y=1}{max}||x||_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+return 
+\begin_inset Formula $h_{\hat{r}}:\mathcal{X}\rightarrow\mathcal{Y}$
+\end_inset
+
+ defined by 
+\begin_inset Formula $h_{\hat{r}}\left(x\right)=\mathbbm{1}$
+\end_inset
+
+
+\begin_inset Formula $\left[||x||_{2}\le\hat{r}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Let us analize the proposed algorithm sample complexity.
+\begin_inset Newline newline
+\end_inset
+
+Firstly, denoting by 
+\begin_inset Formula $r$
+\end_inset
+
+ the true radius of the circle for which 
+\begin_inset Formula $h_{r}$
+\end_inset
+
+ has zero generalization error, it is clear any circle portrayed by my proposed
+ algorithm, must be contained within 
+\begin_inset Formula $h_{r}$
+\end_inset
+
+'s, as my alogirthm elects the maximal radius circle that contains all 
+\begin_inset Formula $1's$
+\end_inset
+
+ in the training set, while 
+\begin_inset Formula $h_{r}$
+\end_inset
+
+ must contain all 
+\begin_inset Formula $1's$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+, and so our proposed algorithm may preform only false negative (false 0)
+ erros.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, let us denote 
+\begin_inset Formula $T=\left\{ x\in\mathcal{X}\left|\hat{r}<||x||_{2}\le r\right.\right\} $
+\end_inset
+
+, and so 
+\begin_inset Formula $T$
+\end_inset
+
+ includes all 
+\begin_inset Formula $x\in\mathcal{X}$
+\end_inset
+
+ that our algorithm would tag as 0's which are in-fact 1's.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\epsilon,\delta>0$
+\end_inset
+
+.
+ let 
+\begin_inset Formula $T'$
+\end_inset
+
+ be a ring containing/conatins 
+\begin_inset Formula $T$
+\end_inset
+
+ such as that 
+\begin_inset Formula $\mathbb{P}_{\left(x,y\right)\sim\mathcal{D}}(x\in T')=\epsilon$
+\end_inset
+
+.
+ as such, the probability of a given point 
+\begin_inset Formula $x\in\mathcal{X}$
+\end_inset
+
+ to be misclassifed by 
+\begin_inset Formula $h_{\hat{r}}$
+\end_inset
+
+ is bounded from above by the probability that 
+\begin_inset Formula $x\in T'$
+\end_inset
+
+, and therefore by assuming iid, the probability of drawing 
+\begin_inset Formula $m$
+\end_inset
+
+ independent smaples from 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ which all misses 
+\begin_inset Formula $T'$
+\end_inset
+
+ is at most 
+\begin_inset Formula $\left(1-\epsilon\right)^{m}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Finally it holds that:
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(h_{\hat{r}}\right)\le\epsilon\right]\le\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(h_{\hat{r}}\right)\le0\right]\le\left(1-\epsilon\right)^{m}\le e^{-\epsilon m}
+\end{align*}
+
+\end_inset
+
+ and thus by choosing 
+\begin_inset Formula $m$
+\end_inset
+
+ such that 
+\begin_inset Formula $e^{-\epsilon m}\le\delta$
+\end_inset
+
+ will result in 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+ probability over 
+\begin_inset Formula $m$
+\end_inset
+
+ random samples that the weight of the error is at most 
+\begin_inset Formula $\epsilon.$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align*}
+e^{-\epsilon m}\le\delta\Leftrightarrow\epsilon m\le ln\left(1/\delta\right)\Leftrightarrow m\le\frac{ln\left(1/\delta\right)}{\epsilon}
+\end{align*}
+
+\end_inset
+
+ Therefore 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta\right)\le\frac{ln\left(1/\delta\right)}{\epsilon}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+VC-Dimension
+\end_layout
+
+\begin_layout Enumerate-Resume
+let 
+\begin_inset Formula $\mathcal{H}=\left\{ h_{1},\dots,h_{N}\right\} ,$
+\end_inset
+
+for some 
+\begin_inset Formula $N\in\mathbb{N}\cup\left\{ 0\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+denoting 
+\begin_inset Formula $VCdim\left(\mathcal{H}\right)=d$
+\end_inset
+
+, it holds that there exists a set if size 
+\begin_inset Formula $d$
+\end_inset
+
+ that is shattered by 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+.
+ As such, there are at least 
+\begin_inset Formula $2^{d}$
+\end_inset
+
+ different hypothersis in 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ and thus 
+\begin_inset Formula 
+\begin{align*}
+2^{d}\le\left|\mathcal{H}\right|\Leftrightarrow d\le log_{2}\left(\left|\mathcal{H}\right|\right) &  & \square
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Firstly, since 
+\begin_inset Formula $\mathcal{H}_{parity}=\left\{ h_{I}\left|I\subseteq\left[n\right]\right.\right\} ,$
+\end_inset
+
+
+\begin_inset Formula $\left|\mathcal{H}_{parity}\right|=\left|\left\{ I\left|I\subseteq\left[n\right]\right.\right\} \right|=2^{n}$
+\end_inset
+
+, following this, by question 3 it holds that 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{parity}\right)\le n$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Now, let us show a group 
+\begin_inset Formula $C\subset\mathcal{X}$
+\end_inset
+
+ such as that 
+\begin_inset Formula $\left|C\right|=n$
+\end_inset
+
+, and 
+\begin_inset Formula $C$
+\end_inset
+
+ is shattered by 
+\begin_inset Formula $\mathcal{H}_{parity}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $C=\left\{ e_{1},\dots,e_{n}\right\} $
+\end_inset
+
+ - (where 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is the i-th unit vector), therefore we note that for any possible labeling
+ 
+\begin_inset Formula $y=\left\{ y_{1},\dots,y_{n}\right\} $
+\end_inset
+
+, defining 
+\begin_inset Formula $I\subset\left[n\right]$
+\end_inset
+
+ as 
+\begin_inset Formula $I=\left\{ i\left|y_{i}=1\right.\right\} $
+\end_inset
+
+ we get 
+\begin_inset Formula $h_{I}$
+\end_inset
+
+ such as that its restriction over the set 
+\begin_inset Formula $C$
+\end_inset
+
+ results in 
+\begin_inset Formula 
+\begin{align*}
+\forall c\in C\;\exists i\in\left[n\right]\;s.t\;h_{I}\left(c\right)=h_{I}\left(e_{i}\right)=\left(\sum_{j\in I}e_{i}^{j}\right)mod2=\mathbbm{1}\left[i=j\right]=\mathbbm{1}\left[y_{i}=1\right]=y_{i}
+\end{align*}
+
+\end_inset
+
+and thus for any labeling over 
+\begin_inset Formula $C$
+\end_inset
+
+ we provided a 
+\begin_inset Formula $h\in\mathcal{H}_{parity}$
+\end_inset
+
+ resulting in the provided label over 
+\begin_inset Formula $C$
+\end_inset
+
+, therefore 
+\begin_inset Formula $\left|\mathcal{H}_{c}\right|=\left|\text{possible labels}\right|=2^{\left|C\right|}$
+\end_inset
+
+i.e 
+\begin_inset Formula $C$
+\end_inset
+
+ is shattered by 
+\begin_inset Formula $\mathcal{H}_{parity}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Summing it up, 
+\begin_inset Formula $n$
+\end_inset
+
+ is an upper bound over the shattered groups size which is achieved and
+ thus 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{parity}\right)=n$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Firstly we note 
+\begin_inset Formula $\mathcal{X}=\mathbb{R}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathcal{Y}=\left\{ 0,1\right\} ,$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{H}_{k-interval}=\left\{ h:\exists A=\bigcup_{i=1}^{k}\left[a_{i},b_{i}\right]\:s.t\:h=h_{A}\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $C\subset\mathcal{X}$
+\end_inset
+
+ such as 
+\begin_inset Formula $C=\left\{ x_{1},\dots,x_{2k}\right\} $
+\end_inset
+
+, where without limit of generality 
+\begin_inset Formula $x_{1}<\cdots<x_{2k+1}.$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Let us show that for any labeling 
+\begin_inset Formula $y=\left\{ y_{1},\dots,y_{2k}\right\} \in\left\{ 0,1\right\} ^{k}$
+\end_inset
+
+ over 
+\begin_inset Formula $C$
+\end_inset
+
+, we manage to find a 
+\begin_inset Formula $h\in\mathcal{H}_{C}$
+\end_inset
+
+ so that 
+\begin_inset Formula $h(x_{i})=y_{i}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+We will be constructing 
+\begin_inset Formula $A=\bigcup_{i=1}^{k}\left[a_{i},b_{i}\right]$
+\end_inset
+
+ where the set 
+\begin_inset Formula $\left(a_{i},b_{i}\right)_{i=1}^{k}$
+\end_inset
+
+ is constructed in the following fashion: the i-th interval defined by 
+\begin_inset Formula $\left(a_{i},b_{i}\right)$
+\end_inset
+
+ is bounding the i-th consecutive block of 1's in the labels 
+\begin_inset Formula $y$
+\end_inset
+
+, and any other number once there are no more such consecutive blocks of
+ 1's (just 0's for 
+\begin_inset Formula $y_{j},...,y_{2k}$
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+From 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ density we have 
+\begin_inset Formula $\aleph$
+\end_inset
+
+ options for each one of 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{i}$
+\end_inset
+
+ in between each block and thus the provided construction if indeed plausable.
+\begin_inset Newline newline
+\end_inset
+
+Furthermore, the provided constructions provides us with 
+\begin_inset Formula $A=\bigcup_{i=1}^{k}\left[a_{i},b_{i}\right]$
+\end_inset
+
+ where for every 
+\begin_inset Formula $x_{i}\in C$
+\end_inset
+
+: 
+\begin_inset Formula $x_{i}\in A\Leftrightarrow y_{i}=1$
+\end_inset
+
+, and thus 
+\begin_inset Formula $h_{A}\in\mathcal{H}_{k-intervals}$
+\end_inset
+
+ enables the required labeling.
+\begin_inset Newline newline
+\end_inset
+
+Since there are 
+\begin_inset Formula $2^{\left|C\right|}$
+\end_inset
+
+ different labels, with each label fitting a different function 
+\begin_inset Formula $h_{A}\in\mathcal{H}_{k-intervals}$
+\end_inset
+
+ as constructed above, 
+\begin_inset Formula $\left|\mathcal{H}_{C}\right|=2^{\left|C\right|}$
+\end_inset
+
+ - 
+\begin_inset Formula $C$
+\end_inset
+
+ is shattered by 
+\begin_inset Formula $\mathcal{H}_{k-intervals}$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{k-intervals}\right)\ge k$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+On the other hand, for any 
+\begin_inset Formula $C\subset\mathcal{X}$
+\end_inset
+
+ such as 
+\begin_inset Formula $C=\left\{ x_{1},\dots,x_{2k+1}\right\} $
+\end_inset
+
+, and the labeling 
+\begin_inset Formula $y=\left(1,0,1,\dots,0,1\right)$
+\end_inset
+
+, there exist 
+\begin_inset Formula $k+1$
+\end_inset
+
+ independandt intervelas with 
+\begin_inset Formula $y_{i}=1$
+\end_inset
+
+, and as such, any function defined by k-intervals, by the pigeonhole principle,
+ would result in at least two different points 
+\begin_inset Formula $y_{i},y_{j}=1$
+\end_inset
+
+, such that both need to be placed within the same interval (as any 
+\begin_inset Formula $y_{i}=1$
+\end_inset
+
+ requires 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to be bounded in one of the k intervals), therefore, by 
+\begin_inset Formula $y$
+\end_inset
+
+'s defenition, there exist 
+\begin_inset Formula $i<l<j$
+\end_inset
+
+, such that 
+\begin_inset Formula $y_{l}=0$
+\end_inset
+
+, but as it is placed within the same interval as 
+\begin_inset Formula $i,j$
+\end_inset
+
+ it must have a labeling of 
+\begin_inset Formula $1$
+\end_inset
+
+ by 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+defenition, thus the labeling 
+\begin_inset Formula $y$
+\end_inset
+
+ is unachievable by our hypothesis class, and 
+\begin_inset Formula $C$
+\end_inset
+
+ is in-fact not shattered by 
+\begin_inset Formula $\mathcal{H}_{k-intervals}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $2k\le VCdim\left(\mathcal{H}_{k-intervals}\right)<2k+1$
+\end_inset
+
+ 
+\begin_inset Formula $\Leftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{k-intervals}\right)=2k.$
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $\mathcal{H}_{con}=\left\{ h(x)=\bigwedge_{i\in I}\hat{x}^{i}\left|I\subseteq\left[d\right]),\;\hat{x}^{i}\in\left\{ x^{i},\overline{x}^{i}\right\} \right.\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Firstly let us show there exists 
+\begin_inset Formula $C\subset\mathcal{X}$
+\end_inset
+
+ so that 
+\begin_inset Formula $\left|C\right|=d$
+\end_inset
+
+ and is shattered by 
+\begin_inset Formula $\mathcal{H}_{con}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $C=\left\{ e_{1},\dots,e_{d}\right\} $
+\end_inset
+
+ where 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is the i-th unit vector, and let 
+\begin_inset Formula $y=\left\{ y_{1},\dots,y_{d}\right\} \in\left\{ 0,1\right\} ^{d}$
+\end_inset
+
+ be a labeling for each 
+\begin_inset Formula $x\in C$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Selecting 
+\begin_inset Formula $I=\left\{ i\left|y_{i}=0\right.\right\} $
+\end_inset
+
+ and for each 
+\begin_inset Formula $i\in I$
+\end_inset
+
+ 
+\begin_inset Formula $\hat{x}^{i}=\overline{x}^{i}$
+\end_inset
+
+, we are defining an 
+\begin_inset Formula $h\in\mathcal{H}_{con}$
+\end_inset
+
+ so that: 
+\begin_inset Formula 
+\begin{align*}
+\forall e_{i}\in C\: & h(e_{j})=\bigwedge_{i\in I}\hat{e_{j}}^{i}=\bigwedge_{i\in I}\overline{e}_{j}^{i}=\mathbbm{1}\left[\forall i\in I\,e_{j}^{i}=0\right]=\mathbbm{1}\left[j\notin I\right]=\mathbbm{1}\left[y_{i}=1\right]
+\end{align*}
+
+\end_inset
+
+Therefore, we have also found 
+\begin_inset Formula $h\in\mathcal{H}_{C}$
+\end_inset
+
+ for any labeling over 
+\begin_inset Formula $C$
+\end_inset
+
+ and thus 
+\begin_inset Formula $C$
+\end_inset
+
+ is shattered by 
+\begin_inset Formula $\mathcal{H}_{con}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{con}\right)\ge d$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+On the other hand, assuming by way of contradiction that there is a 
+\begin_inset Formula $C=\left\{ x_{1},\dots,x_{d+1}\right\} \subset\mathcal{X}$
+\end_inset
+
+ so that 
+\begin_inset Formula $C$
+\end_inset
+
+ is shattered by 
+\begin_inset Formula $\mathcal{H}_{con}$
+\end_inset
+
+, it holds that there exist for any labeling 
+\begin_inset Formula $y=\left\{ y_{1},\dots,y_{d+1}\right\} \in\left\{ 0,1\right\} ^{d+1}$
+\end_inset
+
+ over 
+\begin_inset Formula $C$
+\end_inset
+
+ 
+\begin_inset Formula $h\in\mathcal{H}_{con}$
+\end_inset
+
+ so that for 
+\begin_inset Formula $\forall x_{i}\in C\;h(x_{i})=y_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Therefore each of the following d+1 labelings 
+\begin_inset Formula $y(1),\dots,y(d+1)$
+\end_inset
+
+ where: 
+\begin_inset Formula 
+\begin{align*}
+\forall j\in\left[d+1\right]\;y(i)_{j}=\begin{cases}
+1 & i\neq j\\
+0 & i=j
+\end{cases}
+\end{align*}
+
+\end_inset
+
+Must have a corresponding 
+\begin_inset Formula $h_{i}\in\mathcal{H}_{con}$
+\end_inset
+
+ so that its restriction over 
+\begin_inset Formula $C$
+\end_inset
+
+ results in 
+\begin_inset Formula $y(i)$
+\end_inset
+
+ vector.
+\begin_inset Newline newline
+\end_inset
+
+As such, by defenition each 
+\begin_inset Formula $h_{i}\in\mathcal{H}_{con}$
+\end_inset
+
+ is constructed by some literals conjugation and must include some literal
+ 
+\begin_inset Formula $\hat{x}^{k}\in\left\{ x^{k},\overline{x}^{k}\right\} $
+\end_inset
+
+ (
+\begin_inset Formula $k\in\left[d\right])$
+\end_inset
+
+ such that for every 
+\begin_inset Formula $x_{l}\in C$
+\end_inset
+
+ and and 
+\begin_inset Formula $\forall j\in\left[d+1\right]\;\hat{x}^{k}=\begin{cases}
+1 & i\neq j\\
+0 & i=j
+\end{cases}$
+\end_inset
+
+ (or else it would be impossible for 
+\begin_inset Formula $h_{i}$
+\end_inset
+
+ to generate the 
+\begin_inset Formula $y(i)$
+\end_inset
+
+ labeling).
+\begin_inset Newline newline
+\end_inset
+
+By the pigeonhole principle, as there are 
+\begin_inset Formula $d+1$
+\end_inset
+
+ different functions but 
+\begin_inset Formula $k\in\left[d\right]$
+\end_inset
+
+, there must be two different functions 
+\begin_inset Formula $h_{l_{1}},h_{l_{2}}$
+\end_inset
+
+ (
+\begin_inset Formula $l_{1}\neq l_{2}$
+\end_inset
+
+), so that both use 
+\begin_inset Formula $x^{k}$
+\end_inset
+
+ (either negated or not) in their conjugation.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Therefore, if 
+\begin_inset Formula $x^{k}$
+\end_inset
+
+ or its negation is used for 
+\series bold
+both
+\series default
+ 
+\begin_inset Formula $h_{l_{1}}$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{l_{2}},$
+\end_inset
+
+it must hold that 
+\begin_inset Formula $y(l_{1})_{l_{2}}=y(l_{2})_{l_{2}}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $y(l_{1})_{l_{1}}=y(l_{2})_{l_{1}}=0$
+\end_inset
+
+, which is a contradiction by the labels defenition, as 
+\begin_inset Formula $l_{1}\neq l_{2}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+If, on the other hand, w.l.o.g 
+\begin_inset Formula $h_{l_{1}}$
+\end_inset
+
+ uses 
+\begin_inset Formula $x^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{l_{2}}$
+\end_inset
+
+ uses 
+\begin_inset Formula $\overline{x}^{k}$
+\end_inset
+
+, it must hold that for all 
+\begin_inset Formula $l_{1}\neq j\in\left[d\right]$
+\end_inset
+
+: 
+\begin_inset Formula $y(l_{1})_{j}=1$
+\end_inset
+
+ but then also 
+\begin_inset Formula $y(l_{2})_{j}=0$
+\end_inset
+
+, once again contradicting the labeling defention.
+\begin_inset Newline newline
+\end_inset
+
+Thus it is impossible to achieve those 
+\begin_inset Formula $d+1$
+\end_inset
+
+ different labels by 
+\begin_inset Formula $d$
+\end_inset
+
+ literals conjugation, and 
+\begin_inset Formula $\mathcal{H}_{con}$
+\end_inset
+
+ cannot shatter any subset of 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ of size 
+\begin_inset Formula $d+1$
+\end_inset
+
+ or greater 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{con}\right)<d+1$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{con}\right)=d$
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Agnostic-PAC
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $\mathcal{D},\epsilon,\delta$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Since 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ has the uniform convergence property with function 
+\begin_inset Formula $m_{\mathcal{H}}^{UC}:\left(0,1\right)^{2}\rightarrow\mathbb{N}$
+\end_inset
+
+, then for every 
+\begin_inset Formula $m\ge m_{\mathcal{H}}^{UC}\left(\frac{\epsilon}{2},\delta\right)$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\mathcal{D}^{m}\left(\left\{ S\in\left(\mathcal{X}\times\mathcal{Y}\right)^{m}\left|\text{\ensuremath{S} is \ensuremath{\epsilon}-representative}\right.\right\} \right)\ge1-\delta
+\end{align*}
+
+\end_inset
+
+Assuming 
+\begin_inset Formula $S$
+\end_inset
+
+ is a 
+\begin_inset Formula $\frac{\epsilon}{2}$
+\end_inset
+
+-representative of 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+, and let 
+\begin_inset Formula $h_{S}$
+\end_inset
+
+ be any output on 
+\begin_inset Formula $ERM_{\mathcal{H}}\left(S\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\left(h_{S}\in\underset{h\in\mathcal{H}}{argmin}L_{S}\left(h\right)\right)$
+\end_inset
+
+, we have shown in recitation that 
+\begin_inset Formula $L_{\mathcal{D}}\left(h_{S}\right)\le\underset{h\in\mathcal{H}}{min}L_{\mathcal{D}}\left(h\right)+\epsilon$
+\end_inset
+
+ and thus 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(h_{S}\right)\le\underset{h\in\mathcal{H}}{min}L_{\mathcal{D}}\left(h\right)+\epsilon\right]\underset{{\scriptscriptstyle \begin{matrix}motonicity\\
+\uparrow\\
+\mathclap{\ensuremath{\frac{\ensuremath{\epsilon}}{2}}-representative\Rightarrow L_{\mathcal{D}}\left(h_{S}\right)\le\underset{h\in\mathcal{H}}{min}L_{\mathcal{D}}\left(h\right)+\epsilon}
+\end{matrix}}}{\ge}\mathcal{D}^{m}\left(\left\{ S\in\left(\mathcal{X}\times\mathcal{Y}\right)^{m}\left|\text{\ensuremath{S} is \ensuremath{\frac{\ensuremath{\epsilon}}{2}}-representative}\right.\right\} \right)\underset{{\scriptscriptstyle \begin{matrix}uniform\\
+convergence
+\end{matrix}}}{\ge}1-\delta
+\end{align*}
+
+\end_inset
+
+Therefore, directly by defenition it holds that for some 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta\right)\le m_{\mathcal{H}}^{UC}\left(\frac{\epsilon}{2},\delta\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is Agnostic-PAC learnable.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let us refute the claim by show of a counter example.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\mathcal{H}=\left\{ \pm1\right\} ^{\mathcal{X}}$
+\end_inset
+
+ for any infinite 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+.
+ Therefore, clearly 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is not PAC learnable directly by the 
+\begin_inset Quotes eld
+\end_inset
+
+no free meals
+\begin_inset Quotes erd
+\end_inset
+
+ theorem, yet, for any 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ - a given disturbution over 
+\begin_inset Formula $Z$
+\end_inset
+
+, for the algorithm 
+\begin_inset Formula $\mathcal{A}_{\mathcal{D}}=\underset{h\in\mathcal{H}}{argmin}L_{\mathcal{D}}(h)$
+\end_inset
+
+, it holds that for any 
+\begin_inset Formula $m\in\mathbb{N},\:\epsilon>0$
+\end_inset
+
+ and 
+\begin_inset Formula $S\overset{iid}{\sim}\mathcal{D}^{m}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+L_{\mathcal{D}}\left(\mathcal{A_{D}}\left(S\right)\right)=L_{\mathcal{D}}\left(\underset{h\in\mathcal{H}}{argmin}L_{\mathcal{D}}(h)\right)=min_{h\in\mathcal{H}}L_{\mathcal{D}}(h)\le min_{h\in\mathcal{H}}L_{\mathcal{D}}(h)+\epsilon
+\end{align*}
+
+\end_inset
+
+Thus the provided claim's conditions hold for 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+, yet it is 
+\series bold
+not
+\series default
+ PAC learnable.
+\begin_inset Newline newline
+\end_inset
+
+Assuming by way of contradiction that 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is agnostic-PAC learnable, then there exist a learning algortihm 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, and 
+\begin_inset Formula $m_{\mathcal{H}}:\left(0,1\right)^{2}\rightarrow\mathbb{N}$
+\end_inset
+
+ such that for every 
+\begin_inset Formula $\epsilon,\delta\in\left(0,1\right)$
+\end_inset
+
+ and any distribution 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ over 
+\begin_inset Formula $\mathcal{X\times Y}$
+\end_inset
+
+ when running 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ on 
+\begin_inset Formula $m\ge m_{\mathcal{H}}\left(\epsilon,\delta\right)$
+\end_inset
+
+: 
+\begin_inset Formula $\mathbb{P}_{S\sim\mathcal{D}^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\underset{h\in\mathcal{H}}{min}L_{\mathcal{D}}\left(h\right)+\epsilon\right]\ge1-\delta$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Electing 
+\begin_inset Formula $h^{*}\in\mathcal{H}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ to be a distribution over 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+, we denote 
+\begin_inset Formula $\mathcal{D}'$
+\end_inset
+
+, a distribution over 
+\begin_inset Formula $Z$
+\end_inset
+
+ which samples 
+\begin_inset Formula $x\sim\mathcal{D}$
+\end_inset
+
+ and then returns the pair 
+\begin_inset Formula $\left(x,h^{*}(x)\right)$
+\end_inset
+
+ hence - 
+\begin_inset Formula $\mathcal{D}'\left[\left\{ \left(x,y\right)\left|h^{*}(x)=y\right.\right\} \right]=1$
+\end_inset
+
+,
+\series bold
+ 
+\series default
+by defenition, 
+\begin_inset Formula $\underset{h\in\mathcal{H}}{argmin}L_{\mathcal{D}'}(h)=h^{*}\in\mathcal{H}$
+\end_inset
+
+ (as 
+\begin_inset Formula $L_{\mathcal{D}'}(h^{*})=0$
+\end_inset
+
+), and so it holds that for any 
+\begin_inset Formula $m\ge m_{\mathcal{H}}\left(\epsilon,\delta\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $S\overset{iid}{\sim}\mathcal{D}'^{m}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}_{S\sim\mathcal{D}'^{m}}\left[L_{\mathcal{D}}\left(\mathcal{A}(S)\right)\le\underset{h\in\mathcal{H}}{min}L_{\mathcal{D}'}\left(h\right)+\epsilon\right]=\mathbb{P}_{S\sim\mathcal{D}'^{m}}\left[L_{\mathcal{D}'}\left(\mathcal{A}(S)\right)\le0+\epsilon\right]\ge1-\delta
+\end{align*}
+
+\end_inset
+
+Now, let us note that by defenition, as we defined our loss function to
+ be a 0-1 loss, 
+\begin_inset Formula $L_{\mathcal{D}'}=L_{\mathcal{D},h^{*}},S\sim\mathcal{D}'^{m}\Leftrightarrow S\sim\mathcal{D}^{m}$
+\end_inset
+
+ and thus 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is in-fact PAC-learnable: 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}_{S\sim\mathcal{D}'^{m}}\left[L_{\mathcal{D}'}\left(\mathcal{A}(S)\right)\le0+\epsilon\right]\ge1-\delta\Leftrightarrow\mathbb{P}_{S\sim\mathcal{D}{}^{m}}\left[L_{\mathcal{D},h^{*}}\left(\mathcal{A}(S)\right)\le\epsilon\right]\ge1-\delta
+\end{align*}
+
+\end_inset
+
+ By contradiction to the 
+\begin_inset Quotes eld
+\end_inset
+
+no free meals
+\begin_inset Quotes erd
+\end_inset
+
+ theorem, therefore 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is not agnostic-PAC-learnable.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Monotonicity
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $\mathcal{H},\mathcal{D},m_{\mathcal{H}}$
+\end_inset
+
+, and 
+\begin_inset Formula $\epsilon,\epsilon_{1},\epsilon_{2},\delta,\delta_{1},\delta_{2}\in\left(0,1\right)$
+\end_inset
+
+ such that without limit of generality 
+\begin_inset Formula $\epsilon_{1}\le\epsilon_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{1}\le\delta_{2}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Firstly, 
+\begin_inset Formula 
+\begin{align*}
+\epsilon_{1}\le\epsilon_{2}\Rightarrow & \left\{ L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon_{1}\right\} \subseteq\left\{ L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon_{2}\right\} \\
+\delta_{1}\le\delta_{2}\Rightarrow & \underset{S\sim\mathcal{D}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon\right]\ge1-\delta_{1}\ge1-\delta_{2}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Assuming by way of contradiction that 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon_{1},\delta\right)<m_{\mathcal{H}}\left(\epsilon_{2},\delta\right)$
+\end_inset
+
+, as 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is PAC learnable it holds that there exists a learning algorithm 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ such that for any 
+\begin_inset Formula $m\ge m_{\mathcal{H}}\left(\epsilon_{1},\delta\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\underset{S\sim\mathcal{D}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon_{2}\right]\underset{monotonicity}{\ge}\underset{S\sim\mathcal{D}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon_{1}\right]\underset{PAC}{\ge}1-\delta
+\end{align*}
+
+\end_inset
+
+Thus more specifically for any 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon_{1},\delta\right)\le m<m_{\mathcal{H}}\left(\epsilon_{2},\delta\right)$
+\end_inset
+
+ the above must hold, in contradiction to 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon_{2},\delta\right)$
+\end_inset
+
+ minimality 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon_{1},\delta\right)\ge m_{\mathcal{H}}\left(\epsilon_{2},\delta\right)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Assuming by way of contradiction that 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta_{1}\right)<m_{\mathcal{H}}\left(\epsilon,\delta_{2}\right)$
+\end_inset
+
+, as 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is PAC learnable it holds that there exists a learning algorithm 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ such that for any 
+\begin_inset Formula $m\ge m_{\mathcal{H}}\left(\epsilon,\delta_{1}\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\underset{S\sim\mathcal{D}^{m}}{\mathbb{P}}\left[L_{\mathcal{D}}\left(\mathcal{A}\left(S\right)\right)\le\epsilon\right]\ge1-\delta_{1}\ge1-\delta_{2}
+\end{align*}
+
+\end_inset
+
+Thus more specifically for any 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta_{1}\right)\le m<m_{\mathcal{H}}\left(\epsilon,\delta_{2}\right)$
+\end_inset
+
+ the above must hold, in contradiction to 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta_{2}\right)$
+\end_inset
+
+ minimality 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $m_{\mathcal{H}}\left(\epsilon,\delta_{1}\right)\ge m_{\mathcal{H}}\left(\epsilon,\delta_{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate-Resume
+Assuming by way of contradiction that 
+\begin_inset Formula $d_{1}=:VCdim\left(\mathcal{H}_{1}\right)>VCdim\left(\mathcal{H}_{2}\right):=d_{2}$
+\end_inset
+
+, directly by the VC-dimension defenition it holds that there are sets 
+\begin_inset Formula $C_{1},C_{2}\subset dom\left(\mathcal{H}_{1}\right)=dom\left(\mathcal{H}_{2}\right)=\mathcal{X}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\left|C_{1}\right|=d_{1},\left|C_{2}\right|=d_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{1},C_{2}$
+\end_inset
+
+ are shattered by 
+\begin_inset Formula $\mathcal{H}_{1},\mathcal{H}_{2}$
+\end_inset
+
+ respectively - thus there exists 
+\begin_inset Formula $\mathcal{H}_{1}'\subseteq\mathcal{H}_{1},\mathcal{H}_{2}'\subseteq\mathcal{H}_{2}$
+\end_inset
+
+ such that their restrictions over 
+\begin_inset Formula $C_{1},C_{2}$
+\end_inset
+
+ are of sizes 
+\begin_inset Formula $2^{\left|C_{1}\right|},2^{\left|C_{2}\right|}$
+\end_inset
+
+ respectively.
+\begin_inset Newline newline
+\end_inset
+
+Since 
+\begin_inset Formula $\mathcal{H}_{1}\subseteq\mathcal{H}_{2}$
+\end_inset
+
+, it holds that 
+\begin_inset Formula $\mathcal{H}_{1}'\subseteq\mathcal{H}_{1}\subseteq\mathcal{H}_{2}$
+\end_inset
+
+, and so 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ is also shattered by 
+\begin_inset Formula $\mathcal{H}_{2}$
+\end_inset
+
+ (we have found a subset of 
+\begin_inset Formula $\mathcal{H}_{2}$
+\end_inset
+
+ functions which their restriction over 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ covers all possible labeling) 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $VCdim\left(\mathcal{H}_{2}\right)=d_{1}$
+\end_inset
+
+, by contradiction to our claim that 
+\begin_inset Formula $d_{1}>d_{2}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+And thus, 
+\begin_inset Formula $\mathcal{H}_{1}\subseteq\mathcal{H}_{2}\Rightarrow VCdim\left(\mathcal{H}_{1}\right)\le VCdim\left(\mathcal{H}_{2}\right)$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+ 
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Separate the Inseparable - Adaboost
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+13.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{enumi}{13}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\phantom{asf}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q13.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+AdaBoost error rate relative to varying ensemble size
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\phantom{asf}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q14.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Decision boundary for different ensemble sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\phantom{asf}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q15.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Best preforming ensemble size
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\phantom{asf}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q16.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Weighting of the final training set disturbution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+In the provided plot we see the most 
+\begin_inset Quotes eld
+\end_inset
+
+problematic
+\begin_inset Quotes erd
+\end_inset
+
+ samples.
+ As expected, the boundary between the two classes includes the most difficult
+ samples to classify, and as such, they get misclassified often and thus
+ achieve a higher weight.
+ Furthermore, as our model is a decision stump, it can split the data along
+ the x or y axis, therefore we can notice that weights of corner samples
+ are small, as they can be distiguished well by both types of splits, as
+ oppose to the plus like shape of samples which are more effected by the
+ x,y split limitations, and thus get a higher weight.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+First for noise value of 0.01: 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.1.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.2.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.3.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.4.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+For noise value of 0.4: 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.5.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.6.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.7.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q17.8.emf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+As more and more noise is introduced, the two classes are getting mixed,
+ resulting in it becoming harder for the model to generalize well, and to
+ differentiate between them.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Since we introduced noise, the data now is not a perfect representation
+ of the dataset.
+\begin_inset Newline newline
+\end_inset
+
+As so, the more complex the model gets (by the use of more stumps), the
+ more it is able to overfit and achieve better training error - lower bias,
+ yet as it fits itself to the noised data, it gets further away from a more
+ general solution, failing to generalize and achieving a more substantial
+ estimation error.
+\end_layout
+
+\begin_layout Enumerate
+As oppose to the noiseless case, where the more complex the model was, the
+ better it was able to learn the data, in the noised case larger ensembles
+ have worse generalization error due to overfitting and as such the best
+ model is one with a rather small ensemble.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

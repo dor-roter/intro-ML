@@ -1,0 +1,1088 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{culmus}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{bbm}
+\end_preamble
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Itemize
+  ItemSep 2
+  ParSep 2
+End
+Style Enumerate
+  ItemSep 10
+  ParSep 2
+End
+Style Enumerate-Resume
+  ItemSep 10
+  ParSep 2
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{%
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+underline{Introduction to Machine Learning (67577)}
+\backslash
+
+\backslash
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+large Exercise 5 - Validation, Feature Selection and Regularization
+\backslash
+
+\backslash
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+
+\series bold
+Dor Roter
+\begin_inset Newline newline
+\end_inset
+
+208772251
+\end_layout
+
+\begin_layout Section
+Validation
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let us first note that the given loss function is bounded by 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ let us denote it by 
+\begin_inset Formula $l$
+\end_inset
+
+, then for all 
+\begin_inset Formula $h\in\mathcal{H}_{k}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+X_{i}=l\left(h\left(x_{i}\right),y_{i}\right)\in\left[0,1\right]
+\end{align*}
+
+\end_inset
+
+and:
+\begin_inset Formula 
+\begin{align*}
+ & L_{S_{all}}\left(h\right)=\frac{1}{m}\sum_{i=1}^{m}l\left(h\left(x_{i}\right),y_{i}\right)=\frac{1}{m}\sum_{i=1}^{m}X_{i}\\
+ & L\left(h\right)=\mathbb{E}_{\left(x,y\right)\sim\mathcal{D}}\left[l\left(h\left(x\right),y\right)\right]\underset{X\text{'s iid}}{=}\mathbb{E}\left[\frac{1}{m}\sum_{i=1}^{m}X_{i}\right]
+\end{align*}
+
+\end_inset
+
+ Where 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ is a bounded i.i.d random variable (as 
+\begin_inset Formula $h$
+\end_inset
+
+ is selection is dependant on 
+\begin_inset Formula $S\sim\mathcal{D}^{m}$
+\end_inset
+
+ and so is the selection of 
+\begin_inset Formula $\left(x,y\right)\sim\mathcal{D}$
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\delta\in\left(0,1\right)$
+\end_inset
+
+ using hoeffding inequality let us find an 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ for which 
+\begin_inset Formula $S$
+\end_inset
+
+ is 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-represnetive of 
+\begin_inset Formula $\mathcal{H}_{k}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Firstly for all 
+\begin_inset Formula $h\in\mathcal{H}_{k}$
+\end_inset
+
+ it holds that the probability that 
+\begin_inset Formula $S_{all}$
+\end_inset
+
+ is not 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-representive is bounded such that: 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}\left[\left|L_{S_{all}}\left(h\right)-L\left(h\right)\right|\ge\epsilon\right] & \le2e^{-2m\epsilon^{2}}\\
+\end{align*}
+
+\end_inset
+
+Therfore the probablity for 
+\series bold
+any
+\series default
+ 
+\begin_inset Formula $h\in\mathcal{H}_{k}$
+\end_inset
+
+ to be not 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-representive is bounded by the union bound (as 
+\begin_inset Formula $\mathcal{H}_{k}$
+\end_inset
+
+ is finite):
+\begin_inset Formula 
+\begin{align*}
+\mathbb{P}\left[\exists h\in\mathcal{H}_{k}\left|\left|L_{S_{all}}\left(h\right)-L\left(h\right)\right|\ge\epsilon\right.\right]\underset{\text{union bound}}{\le} & \left|\mathcal{H}_{k}\right|\cdot\underset{h'\in\mathcal{H}_{k}}{max}\left(\mathbb{P}\left[\left|L_{S_{all}}\left(h'\right)-L\left(h'\right)\right|\ge\epsilon\right]\right)\le2\left|\mathcal{H}_{k}\right|e^{-2m\epsilon^{2}}
+\end{align*}
+
+\end_inset
+
+Finally we can find the 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ that bounds 
+\begin_inset Formula $\mathcal{D}^{m}\left[S\left|\left|L_{S_{all}}\left(h\right)-L\left(h\right)\right|\ge\epsilon\right.\right]\le2\left|\mathcal{H}_{k}\right|e^{-2m\epsilon^{2}}\le\delta$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+ & 2\left|\mathcal{H}_{k}\right|e^{-2m\epsilon^{2}}\le\delta\\
+\Leftrightarrow & ln\left(2\left|\mathcal{H}_{k}\right|\right)+ln\left(e^{-2m\epsilon^{2}}\right)\le ln\left(\delta\right)\\
+\Leftrightarrow & ln\left(2\left|\mathcal{H}_{k}\right|\right)-ln\left(\delta\right)\le2m\epsilon^{2}\\
+\Leftrightarrow & \frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}\le\epsilon^{2}\\
+\underset{\frac{1}{\delta}>1}{\Leftrightarrow} & \epsilon\ge\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}
+\end{align*}
+
+\end_inset
+
+Therefore for 
+\begin_inset Formula $\epsilon=\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}$
+\end_inset
+
+ it holds for any 
+\begin_inset Formula $\delta$
+\end_inset
+
+ that: 
+\begin_inset Formula 
+\begin{align*}
+ & \mathbb{P}\left[\left|L_{S_{all}}\left(h\right)-L\left(h\right)\right|>\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}\right]\le\delta\\
+\Leftrightarrow & \mathbb{P}\left[\left|L_{S_{all}}\left(h\right)-L\left(h\right)\right|\le\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}\right]\ge1-\delta
+\end{align*}
+
+\end_inset
+
+ So it holds that with probability of at least 
+\begin_inset Formula $\left(1-\delta\right)$
+\end_inset
+
+ 
+\begin_inset Formula $S_{all}$
+\end_inset
+
+ is 
+\begin_inset Formula $\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}$
+\end_inset
+
+-representive of 
+\begin_inset Formula $\mathcal{H}_{k}$
+\end_inset
+
+ and so as we have shown in recitation, for 
+\begin_inset Formula $h^{*}\in ERM_{\mathcal{H}_{k}}$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+L\left(h^{*}\right)\le\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+2\sqrt{\frac{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{2m}}=\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+\sqrt{\frac{2\cdot ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let us use the previos inequality for both the second and third step of
+ model selection.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\delta,\alpha\in\left(0,1\right).$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+For the second step, let 
+\begin_inset Formula $i\in\left[k\right]$
+\end_inset
+
+ then 
+\begin_inset Formula $h_{i}\in ERM_{\mathcal{H}_{i}}$
+\end_inset
+
+
+\begin_inset Formula $\left(S\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $S$
+\end_inset
+
+ size is 
+\begin_inset Formula $\left(1-\alpha\right)m$
+\end_inset
+
+, so: 
+\begin_inset Formula 
+\begin{align*}
+L\left(h_{i}\right)\le\underset{h\in\mathcal{H}_{i}}{min}L\left(h\right)+\sqrt{\frac{2\cdot ln\left(2\left|\mathcal{H}_{i}\right|/\left(\delta/2\right)\right)}{\left(1-\alpha\right)m}}=\underset{h\in\mathcal{H}_{i}}{min}L\left(h\right)+\sqrt{\frac{2}{\left(1-\alpha\right)m}ln\left(\frac{4\left|\mathcal{H}_{i}\right|}{\delta}\right)}
+\end{align*}
+
+\end_inset
+
+Similarly for the third step with 
+\begin_inset Formula $\left|V\right|=\alpha m$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\mathcal{H}\right|=k$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+L\left(h^{*}\right)\le\underset{h\in\mathcal{H}}{min}L\left(h\right)+\sqrt{\frac{2\cdot ln\left(4\left|\mathcal{H}\right|/\delta\right)}{\alpha m}}=\underset{h\in\mathcal{H}}{min}L\left(h\right)+\sqrt{\frac{2}{\alpha m}ln\left(\frac{4k}{\delta}\right)}
+\end{align*}
+
+\end_inset
+
+Both with probability of at least 
+\begin_inset Formula $1-\frac{\delta}{2}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+As noted in the question, if 
+\begin_inset Formula $\overline{h}=argmin_{h\in\mathcal{H}_{k}}L\left(h\right)\in\mathcal{H}_{j}$
+\end_inset
+
+ then for 
+\begin_inset Formula $h_{j}\in\mathcal{H}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\underset{h\in\mathcal{H}}{min}L\left(h\right)\underset{min}{\le}L\left(h_{j}\right)\underset{above}{\le}\underset{h\in\mathcal{H}_{j}}{min}L\left(h\right)+\sqrt{\frac{2}{\left(1-\alpha\right)m}ln\left(\frac{4\left|\mathcal{H}_{j}\right|}{\delta}\right)}
+\end{align*}
+
+\end_inset
+
+Finally, as the two events are independent, the probability for both is
+ 
+\begin_inset Formula $\left(1-\frac{\delta}{2}\right)^{2}=1-\delta+\delta^{2}>1-\delta$
+\end_inset
+
+, so clearly with probability of at least 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+ it holds that:
+\begin_inset Formula 
+\begin{align*}
+L\left(h^{*}\right)\le\underset{h\in\mathcal{H}}{min}L\left(h\right)+\sqrt{\frac{2}{\alpha m}ln\left(\frac{4k}{\delta}\right)}\le\underset{h\in\mathcal{H}_{j}}{min}L\left(h\right)+\sqrt{\frac{2}{\alpha m}ln\left(\frac{4k}{\delta}\right)}+\sqrt{\frac{2}{\left(1-\alpha\right)m}ln\left(\frac{4\left|\mathcal{H}_{j}\right|}{\delta}\right)}
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $argmin_{h\in\mathcal{H}_{k}}L\left(h\right)\in\mathcal{H}_{j}\subseteq\mathcal{H}_{j+1}\subseteq\dots\subseteq\mathcal{H}_{k}$
+\end_inset
+
+ it holds that 
+\begin_inset Formula $\underset{h\in\mathcal{H}_{j}}{min}L\left(h\right)=\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)$
+\end_inset
+
+, thus finally: 
+\begin_inset Formula 
+\begin{align*}
+L\left(h^{*}\right)\le\underset{h\in\mathcal{H}_{j}}{min}L\left(h\right)+\sqrt{\frac{2}{\alpha m}ln\left(\frac{4k}{\delta}\right)}+\sqrt{\frac{2}{\left(1-\alpha\right)m}ln\left(\frac{4\left|\mathcal{H}_{j}\right|}{\delta}\right)}=\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+\sqrt{\frac{2}{\alpha m}ln\left(\frac{4k}{\delta}\right)}+\sqrt{\frac{2}{\left(1-\alpha\right)m}ln\left(\frac{4\left|\mathcal{H}_{j}\right|}{\delta}\right)}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $\mathcal{H}_{j}=\mathcal{H}_{k}$
+\end_inset
+
+ then clearly 
+\begin_inset Formula 
+\begin{align*}
+\sqrt{\frac{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}<\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{k}\right|/\delta\right)}{\left(1-\alpha\right)m}}=\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}
+\end{align*}
+
+\end_inset
+
+And then the standard method is bounded tighter than the model selection
+ method:
+\begin_inset Formula 
+\begin{align*}
+L\left(h^{*}\right)\le\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+\sqrt{\frac{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}\le\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}\le\underset{h\in\mathcal{H}_{k}}{min}L\left(h\right)+\sqrt{\frac{2ln\left(4k/\delta\right)}{\alpha m}}+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}
+\end{align*}
+
+\end_inset
+
+ Next, let 
+\begin_inset Formula $\left|\mathcal{H}_{i}\right|=2^{i}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\sqrt{\frac{2ln\left(4k/\delta\right)}{\alpha m}}+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}}{\sqrt{\frac{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}}=\left(\sqrt{\frac{2ln\left(4k/\delta\right)}{\alpha m}}+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}\right)\cdot\frac{\sqrt{m}}{\sqrt{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}}=\\
+ & \sqrt{\frac{m\cdot2ln\left(4k/\delta\right)}{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)\cdot\alpha m}}+\sqrt{\frac{m\cdot2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)\cdot\left(1-\alpha\right)m}}=\sqrt{\frac{ln\left(4k/\delta\right)}{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)\cdot\alpha}}+\sqrt{\frac{ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)\cdot\left(1-\alpha\right)}}=\\
+ & \sqrt{\frac{ln\left(4k/\delta\right)}{\left(ln\left(2^{k+1}\right)-ln\left(\delta\right)\right)\cdot\alpha}}+\sqrt{\frac{ln\left(2^{j+2}/\delta\right)}{\left(ln\left(2^{k+1}\right)-ln\left(\delta\right)\right)\cdot\left(1-\alpha\right)}}\underset{\delta<1}{<}\sqrt{\frac{ln\left(4k\right)-ln\left(\delta\right)}{ln\left(2^{k+1}\right)\cdot\alpha}}+\sqrt{\frac{ln\left(2^{j+2}\right)-ln\left(\delta\right)}{ln\left(2^{k+1}\right)\cdot\left(1-\alpha\right)}}=\\
+ & =\sqrt{\frac{O\left(ln\left(k\right)\right)}{O\left(k\right)}}+\sqrt{\frac{O\left(j\right)}{O\left(k\right)}}
+\end{align*}
+
+\end_inset
+
+And thus especially when 
+\begin_inset Formula $j$
+\end_inset
+
+ is constant and 
+\begin_inset Formula $k\rightarrow\infty$
+\end_inset
+
+ (any case where 
+\begin_inset Formula $j$
+\end_inset
+
+ is sufficently smaller than 
+\begin_inset Formula $k$
+\end_inset
+
+): 
+\begin_inset Formula 
+\begin{align*}
+\frac{\sqrt{\frac{2ln\left(4k/\delta\right)}{\alpha m}}+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}}{\sqrt{\frac{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}}<1\Leftrightarrow\sqrt{\frac{2ln\left(4k/\delta\right)}{\alpha m}}+\sqrt{\frac{2ln\left(4\left|\mathcal{H}_{j}\right|/\delta\right)}{\left(1-\alpha\right)m}}<\sqrt{\frac{2ln\left(2\left|\mathcal{H}_{k}\right|/\delta\right)}{m}}
+\end{align*}
+
+\end_inset
+
+And so the model selection method offers better bounds.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We know 
+\begin_inset Formula $\hat{w}_{\lambda}^{ridge}=\left(X^{T}X+\lambda I\right)^{-1}X^{T}y$
+\end_inset
+
+ is the closed solution for the ridge optimization, and 
+\begin_inset Formula $\hat{w}^{LS}=\left(X^{T}X\right)^{\dagger}X^{T}y=X^{T}y$
+\end_inset
+
+ is the closed solution the regular regression problem, and so: 
+\begin_inset Formula 
+\begin{align*}
+ & \hat{w}_{\lambda}^{ridge}=\left(X^{T}X+\lambda I\right)^{-1}X^{T}y=\left(I+\lambda I\right)^{-1}X^{T}y=\left(\left(1+\lambda\right)I\right)^{-1}X^{T}y=\\
+ & =\left(\frac{1}{1+\lambda}I\right)X^{T}y=\frac{\hat{w}^{LS}}{1+\lambda}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Firstly 
+\begin_inset Formula $\hat{w}^{LS}=X^{T}y$
+\end_inset
+
+ under orthogonal design.
+ 
+\begin_inset Formula 
+\begin{align*}
+ & \hat{w}_{\lambda}^{subset}=\eta_{\sqrt{\lambda}}^{hard}\\
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\hat{w}_{\lambda}^{subset} & =argmin_{w_{0}\in\mathbb{R},w\in\mathbb{R}^{d}}\left|\left|w_{0}1+Xw-y\right|\right|^{2}+\lambda\left|\left|w\right|\right|_{0}=\\
+ & argmin_{w_{0}\in\mathbb{R},w\in\mathbb{R}^{d}}\left|\left|X^{T}\left(w_{0}1+Xw-y\right)\right|\right|^{2}+\lambda\left|\left|w\right|\right|_{0}=\\
+ & argmin_{w_{0}\in\mathbb{R},w\in\mathbb{R}^{d}}\left|\left|X^{T}w_{0}1+X^{T}Xw-X^{T}y\right|\right|^{2}+\lambda\left|\left|w\right|\right|_{0}=\\
+ & argmin_{w_{0}\in\mathbb{R},w\in\mathbb{R}^{d}}\left|\left|X^{T}w_{0}1\right|\right|^{2}+\left|\left|w-\hat{w}^{LS}\right|\right|^{2}+\lambda\left|\left|w\right|\right|_{0}=\\
+\end{align*}
+
+\end_inset
+
+Now for each 
+\begin_inset Formula $i\in\left[d\right]$
+\end_inset
+
+ it holds that:
+\begin_inset Formula 
+\begin{align*}
+argmin_{w_{i}\in\mathbb{R}}\left(\left(w_{i}-\hat{w}_{i}^{LS}\right)^{2}+\lambda\left|\left|w_{i}\right|\right|_{0}\right)=\begin{cases}
+argmin_{w_{i}\in\mathbb{R}}\left(\left(w_{i}-\hat{w}_{i}^{LS}\right)^{2}+\lambda\right)=\hat{w}_{i}^{LS} & \left(\hat{w}_{i}^{LS}\right)^{2}>\lambda\Leftrightarrow\left|\hat{w}_{i}^{LS}\right|>\sqrt{\lambda}\\
+argmin_{w_{i}\in\mathbb{R}}\left(\left(\hat{w}_{i}^{LS}\right)^{2}\right)=0 & \left(\hat{w}_{i}^{LS}\right)^{2}\le\lambda\Leftrightarrow\left|\hat{w}_{i}^{LS}\right|\le\sqrt{\lambda}
+\end{cases}
+\end{align*}
+
+\end_inset
+
+As 
+\begin_inset Formula $w_{0}$
+\end_inset
+
+ is minimized separatly, 
+\begin_inset Formula $argmin_{w_{0}\in\mathbb{R},w\in\mathbb{R}^{d}}\left|\left|w_{0}1+Xw-y\right|\right|^{2}+\lambda\left|\left|w\right|\right|_{0}$
+\end_inset
+
+ can be computed by finding for each index its minimizer, and thus in-fact
+ 
+\begin_inset Formula $\hat{w}_{\lambda}^{subset}=\eta_{\sqrt{\lambda}}^{hard}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+First as 
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ is invertible, the closed solution to the linear regression is giveb by
+ 
+\begin_inset Formula $\hat{w}\left(\lambda=0\right)=\hat{w}=\left(X^{T}X\right)^{\dagger}X^{T}y=\left(X^{T}X\right)^{-1}X^{T}y$
+\end_inset
+
+, while the solution to the ridge regression is given by 
+\begin_inset Formula $\hat{w}\left(\lambda\right)=argmin_{w}\left(\left|\left|y-Xw\right|\right|_{2}^{2}+\lambda\left|\left|w\right|\right|_{2}^{2}\right)=\left(X^{T}X+\lambda I\right)^{-1}X^{T}y$
+\end_inset
+
+, therefore:
+\begin_inset Formula 
+\begin{align*}
+ & A_{\lambda}\hat{w}=\left(X^{T}X+\lambda I\right)^{-1}\left(X^{T}X\right)\left(X^{T}X\right)^{-1}X^{T}y=\\
+ & =\left(X^{T}X+\lambda I\right)^{-1}X^{T}y=\hat{w}\left(\lambda\right)
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Since 
+\begin_inset Formula $A_{\lambda}$
+\end_inset
+
+ is a non-random matrix (defined by 
+\begin_inset Formula $X,\lambda$
+\end_inset
+
+ which are provided), applying it to 
+\begin_inset Formula $\hat{w}$
+\end_inset
+
+ is applying a linear transformation to it, thus by the expected value's
+ linearity it holds that: 
+\begin_inset Formula 
+\begin{align*}
+\mathbb{E}\left[\hat{w}\left(\lambda\right)\right]=\mathbb{E}\left[A_{\lambda}\hat{w}\right]=A_{\lambda}\mathbb{E}\left[\hat{w}\right]=A_{\lambda}w=\left(X^{T}X+\lambda I\right)^{-1}\left(X^{T}X\right)w
+\end{align*}
+
+\end_inset
+
+Therefore for any 
+\begin_inset Formula $\lambda\neq0$
+\end_inset
+
+ it holds that 
+\begin_inset Formula $\mathbb{E}\left[\hat{w}\left(\lambda\right)\right]\neq w$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Using the hints:
+\begin_inset Formula 
+\begin{align*}
+Var\left(\hat{w}\left(\lambda\right)\right)=Var\left(A_{\lambda}\hat{w}\right)=A_{\lambda}Var\left(\hat{w}\right)A_{\lambda}^{T}=A_{\lambda}\sigma^{2}\left(X^{T}X\right)^{-1}A_{\lambda}^{T}=\sigma^{2}A_{\lambda}\left(X^{T}X\right)^{-1}A_{\lambda}^{T}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+As we have seen previously, the MSE can be broken up into a bias-variance
+ decomposition: 
+\begin_inset Formula 
+\begin{align*}
+ & MSE\left(w,\hat{w}\right)=\mathbb{E}\left[\left|\left|\hat{w}\left(\lambda\right)-w\right|\right|^{2}\right]=Var\left(\hat{w}\left(\lambda\right)\right)+bias^{2}\left(\hat{w}\left(\lambda\right)\right)\\
+\end{align*}
+
+\end_inset
+
+We have shown that 
+\begin_inset Formula $\mathbb{E}\left[\hat{w}\right]=w$
+\end_inset
+
+, and so 
+\begin_inset Formula 
+\begin{align*}
+ & bias\left(\lambda\right)=\mathbb{E}\left[\hat{w}\left(\lambda\right)-w\right]=\mathbb{E}\left[\hat{w}\left(\lambda\right)\right]-w=\left(A_{\lambda}-I\right)w\Rightarrow bias^{2}\left(\lambda\right)=\left|\left|\left(A_{\lambda}-I\right)w\right|\right|^{2}\\
+ & Var\left(\lambda\right)=Var\left(\hat{w}\left(\lambda\right)\right)=\sigma^{2}A_{\lambda}\left(X^{T}X\right)^{-1}A_{\lambda}^{T}
+\end{align*}
+
+\end_inset
+
+ Since 
+\begin_inset Formula $\left(A_{\lambda}-I\right)|_{\lambda=0}=0$
+\end_inset
+
+, using the chain rule:
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial}{\partial\lambda}bias^{2}\left(\lambda\right)|_{\lambda=0} & =\left|\left|\left(A_{\lambda}-I\right)w\right|\right|^{2}=2\left|\left|\left(A_{\lambda}-I\right)w\right|\right||_{\lambda=0}\left(\frac{\partial}{\partial\lambda}\left(A_{\lambda}-I\right)w\right)|_{\lambda=0}=0\cdot\left(\frac{\partial}{\partial\lambda}\left(A_{\lambda}-I\right)w\right)|_{\lambda=0}=0
+\end{align*}
+
+\end_inset
+
+Also since 
+\begin_inset Formula $A_{\lambda}|_{\lambda=0}=\left(X^{T}X+\lambda I\right)^{-1}X^{T}X|_{\lambda=0}=\left(X^{T}X\right)^{-1}X^{T}X=I$
+\end_inset
+
+, Using the chain rule we get: 
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial}{\partial\lambda}A_{\lambda}|_{\lambda=0}= & \left(X^{T}X\right)\frac{\partial}{\partial\lambda}\left(X^{T}X+\lambda I\right)^{-1}|_{\lambda=0}=-\left(X^{T}X\right)\left(X^{T}X+\lambda I\right)^{-2}\frac{\partial}{\partial\lambda}\left(X^{T}X+\lambda I\right)|_{\lambda=0}=\\
+ & =-\left(X^{T}X\right)\left(X^{T}X\right)^{-2}=-\left(X^{T}X\right)^{-1}\\
+\\
+\frac{\partial}{\partial\lambda}Var\left(\lambda\right)|_{\lambda=0}= & \frac{\partial}{\partial\lambda}\sigma^{2}A_{\lambda}\left(X^{T}X\right)^{-1}A_{\lambda}^{T}|_{\lambda=0}=2\sigma^{2}\left(X^{T}X\right)^{-1}A_{\lambda}^{T}\cdot\left(\frac{\partial}{\partial\lambda}A_{\lambda}\right)|_{\lambda=0}=\\
+ & =2\sigma^{2}\left(X^{T}X\right)^{-1}\cdot-\left(X^{T}X\right)^{-1}=-2\sigma^{2}\left(X^{T}X\right)^{-2}
+\end{align*}
+
+\end_inset
+
+As 
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ is invertible and symetric, it is a PSD, and so 
+\begin_inset Formula $-2\sigma^{2}\left(X^{T}X\right)^{-2}<0$
+\end_inset
+
+, therefore: 
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial}{\partial\lambda}MSE\left(\lambda\right)|_{\lambda=0}=\frac{\partial}{\partial\lambda}Var\left(\lambda\right)|_{\lambda=0}+\frac{\partial}{\partial\lambda}bias^{2}\left(\lambda\right)|_{\lambda=0}=-2\sigma^{2}\left(X^{T}X\right)^{-2}+0<0
+\end{align*}
+
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+As we have shown in the last question that 
+\begin_inset Formula $\frac{\partial}{\partial\lambda}MSE\left(0\right)<0$
+\end_inset
+
+, by definition there exists 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+ such that 
+\begin_inset Formula $\frac{MSE\left(\lambda\right)-MSE\left(0\right)}{\lambda-0}<0\Rightarrow MSE\left(\lambda\right)<MSE\left(0\right)$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\text{e}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ As 
+\begin_inset Formula $f$
+\end_inset
+
+ is a polynimial of the 5th degree, we note 
+\begin_inset Formula $d^{*}=5$
+\end_inset
+
+ which is to be expected as there is not a lot of noise applied to the dataset.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+5-fold validation errors
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 4e.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(g\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ The test error for 
+\begin_inset Formula $h^{*}$
+\end_inset
+
+ is around 1.03, which is similar to the cross-validation minimum.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(h\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ In this case, there is a lot of noise in the dataset, and as a result of
+ this the polynomial fitting model tends to prefer higher degree polynomials
+ as those provide a better traininng error, but thanks to cross-validation
+ we still manage to filter this bias of the model towards overfitting, and
+ find the best fit to be 
+\begin_inset Formula $d^{*}=5$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ As we are aiming to test for the best regularization parameter (lambda),
+ We would like to see how none-regularized models all the way up to heavliy
+ regularized models fair one against the other.
+ As such, I have elected the range of possible values for lambda to be of
+ linearliy spaced values between zero and 2 (so we have both larger, and
+ smaller than 1 lambda values to compare).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(d\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Training & Validation errors over 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 5d.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(g\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ The best results were achieved by the ridge regressor, it seems that a
+ small amount of regularization was beneficial when comparing the ridge
+ model to the un-regularized linear regressor.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

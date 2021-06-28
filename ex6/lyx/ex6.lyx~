@@ -1,0 +1,1225 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{culmus}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{bbm}
+\end_preamble
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Itemize
+  ItemSep 2
+  ParSep 2
+End
+Style Enumerate
+  ItemSep 10
+  ParSep 2
+End
+Style Enumerate-Resume
+  ItemSep 10
+  ParSep 2
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{%
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+underline{Introduction to Machine Learning (67577)}
+\backslash
+
+\backslash
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+large Exercise 6 - PCA, kernels, SGD and DL
+\backslash
+
+\backslash
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+
+\series bold
+Dor Roter
+\begin_inset Newline newline
+\end_inset
+
+208772251
+\end_layout
+
+\begin_layout Section
+PCA
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $v\in\mathbb{R}^{d},$
+\end_inset
+
+then 
+\begin_inset Formula $\left\langle v,X\right\rangle $
+\end_inset
+
+ is the projection of 
+\begin_inset Formula $X$
+\end_inset
+
+ to the plan defined by 
+\begin_inset Formula $v$
+\end_inset
+
+, now let us show that the vector used for embedding 
+\begin_inset Formula $X$
+\end_inset
+
+ into single dimension, maximizes the covariance.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+Var\left(\left\langle v,X\right\rangle \right)= & Var\left(v^{T}X\right)=\mathbb{E}_{X}\left[\left(v^{T}X-\mathbb{E}_{X}\left[v^{T}X\right]\right)^{2}\right]=\\
+ & \mathbb{E}_{X}\left[\left(v^{T}\left(X-\mathbb{E}_{X}\left[X\right]\right)\right)\left(v^{T}\left(X-\mathbb{E}_{X}\left[X\right]\right)^{T}\right)\right]=\\
+ & \mathbb{E}_{X}\left[v^{T}\left(X-\mathbb{E}_{X}\left[X\right]\right)\left(X-\mathbb{E}_{X}\left[X\right]\right)^{T}v\right]=\\
+ & v^{T}\mathbb{E}_{X}\left[\left(X-\mathbb{E}_{X}\left[X\right]\right)\left(X-\mathbb{E}_{X}\left[X\right]\right)^{T}\right]v=\\
+ & =v^{T}Var\left(X\right)v=v^{T}\Sigma v
+\end{align*}
+
+\end_inset
+
+Therefore maximizing the projected variance in respect to 
+\begin_inset Formula $v$
+\end_inset
+
+ can be achieved by using the lagranginan 
+\begin_inset Formula $g\left(v\right)=1-v^{T}v$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\hat{v}=\underset{v\in\mathbb{R}^{d},\left|\left|v\right|\right|=1}{argmax}v^{T}\Sigma v=\underset{v\in\mathbb{R}^{d}}{argmax}\mathcal{L}(v,\lambda)=\underset{v\in\mathbb{R}^{d}}{argmax}v^{T}\Sigma v+\lambda g\left(v\right)
+\end{align*}
+
+\end_inset
+
+Now as both 
+\begin_inset Formula $g\left(\cdot\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $v^{T}\Sigma v$
+\end_inset
+
+ are clearly concave functions, so their linear combination 
+\begin_inset Formula $\mathcal{L}(v,\lambda)$
+\end_inset
+
+ must also be concave, and so in order to find a maximum we can follow Fermat’s
+ theorem:
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\partial}{\partial v}\mathcal{L}(v,\lambda)=2\Sigma v-2\lambda v=0\\
+ & \frac{\partial}{\partial\lambda}\mathcal{L}(v,\lambda)=1-v^{T}v=0
+\end{align*}
+
+\end_inset
+
+Thus both of the following terms must hold for a maximizer 
+\begin_inset Formula $\hat{v}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+ & \Sigma v=\lambda v\\
+ & v^{T}v=1\Leftrightarrow\left|\left|v\right|\right|=1
+\end{align*}
+
+\end_inset
+
+And so 
+\begin_inset Formula 
+\begin{align*}
+ & \Sigma v=\lambda v\Leftrightarrow v^{T}\Sigma v=v^{T}\lambda v=\lambda v^{T}v=\lambda\\
+\Downarrow\\
+ & \underset{\left|\left|v\right|\right|=1}{max}Var\left(\left\langle v,X\right\rangle \right)=\underset{\left|\left|v\right|\right|=1}{max}v^{T}\Sigma v=\underset{\text{\ensuremath{\lambda}is an eigenvalue of X }}{max}\lambda
+\end{align*}
+
+\end_inset
+
+ Therefore the 
+\begin_inset Formula $\hat{v}$
+\end_inset
+
+ for which 
+\begin_inset Formula $X$
+\end_inset
+
+'s projection's variance is maximal is an eigenvector of the maximal eigenvalue
+ 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+, exactly the PCA's one dimension embeding - and so no vector 
+\begin_inset Formula $v\in\mathbb{R}^{d}$
+\end_inset
+
+ might have a large variance than the PCA embedding of 
+\begin_inset Formula $X$
+\end_inset
+
+ into a single dimension.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Kernels
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $k\left(x,x'\right)$
+\end_inset
+
+ be a given valid kernel, let us define a new kernel 
+\begin_inset Formula $\tilde{k}$
+\end_inset
+
+ by:
+\begin_inset Formula 
+\begin{align*}
+\tilde{k}\left(x,x'\right)=\frac{k\left(x,x'\right)}{\sqrt{k\left(x,x\right)\cdot k\left(x',x'\right)}}
+\end{align*}
+
+\end_inset
+
+Firstly, it is easy to note that it is in-fact normalized, as: 
+\begin_inset Formula 
+\begin{align*}
+\tilde{k}\left(x,x\right)=\frac{k\left(x,x\right)}{\sqrt{k\left(x,x\right)\cdot k\left(x,x\right)}}=\frac{k\left(x,x\right)}{k\left(x,x\right)}=1
+\end{align*}
+
+\end_inset
+
+Next, as we have seen in recitation, for any function 
+\begin_inset Formula $f$
+\end_inset
+
+ if 
+\begin_inset Formula $k$
+\end_inset
+
+ is a valid kernel then 
+\begin_inset Formula $k'\left(x,x'\right)=f(x)k\left(x,x'\right)f(x')$
+\end_inset
+
+ is also a valid kernel and so defining 
+\begin_inset Formula $f\left(x\right)=\frac{1}{\sqrt{k\left(x,x\right)}}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\tilde{k}\left(x,x'\right)=\frac{k\left(x,x'\right)}{\sqrt{k\left(x,x\right)\cdot k\left(x',x'\right)}}=\frac{k\left(x,x'\right)}{\sqrt{k\left(x,x\right)}\cdot\sqrt{k\left(x',x'\right)}}=\frac{1}{\sqrt{k\left(x,x\right)}}k\left(x,x'\right)\frac{1}{\sqrt{k\left(x',x'\right)}}=f(x)k\left(x,x'\right)f(x')
+\end{align*}
+
+\end_inset
+
+Thus 
+\begin_inset Formula $\tilde{k}$
+\end_inset
+
+ is a valid, normalized kernel.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $\mathcal{X}=\mathbb{R}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{Y}=\left\{ \begin{pmatrix}\pm1,\end{pmatrix}1\right\} $
+\end_inset
+
+and 
+\begin_inset Formula $S=\left\{ \left(\begin{pmatrix}-2\\
+0
+\end{pmatrix},1\right),\left(\begin{pmatrix}0\\
+0
+\end{pmatrix},-1\right),\left(\begin{pmatrix}2\\
+0
+\end{pmatrix},1\right)\right\} $
+\end_inset
+
+ thus a linear seprator hypothesis class over 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+ is defined by some linear 2d line, and so it is impossible to provide a
+ linear seprator in 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+ for the provided samples, as any line crossing would group together at
+ best 
+\begin_inset Formula $x_{1},x_{2}$
+\end_inset
+
+ or 
+\begin_inset Formula $x_{2},x_{3}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\psi:\mathbb{R}^{2}\rightarrow\mathbb{R}^{3}$
+\end_inset
+
+ be defined by 
+\begin_inset Formula $\psi(x)=\begin{pmatrix}x_{1}\\
+x_{2}\\
+\left(x_{1}+x_{2}\right)^{2}
+\end{pmatrix}$
+\end_inset
+
+, and so now 
+\begin_inset Formula $S_{\psi}=\left\{ \left(\begin{pmatrix}-2\\
+0\\
+4
+\end{pmatrix},1\right),\left(\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix},-1\right),\left(\begin{pmatrix}2\\
+0\\
+4
+\end{pmatrix},-1\right)\right\} $
+\end_inset
+
+ and we can linearly seprate the samples using the plane defined by 
+\begin_inset Formula $w=\begin{pmatrix}0\\
+0\\
+1/2
+\end{pmatrix}$
+\end_inset
+
+ and 
+\begin_inset Formula $b=-1$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Convex optimization
+\end_layout
+
+\begin_layout Enumerate-Resume
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f_{i}:V\rightarrow\mathbb{R}$
+\end_inset
+
+for 
+\begin_inset Formula $i\in\left[m\right]$
+\end_inset
+
+ be a convex function and 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ be a non-negative scalar.
+\begin_inset Newline newline
+\end_inset
+
+Let us show that 
+\begin_inset Formula $g\left(u\right)=$
+\end_inset
+
+
+\begin_inset Formula $\sum_{i=1}^{m}\gamma_{i}f_{i}\left(u\right)$
+\end_inset
+
+ is convex.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $u,v\in V$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+ & g\left(u\right)+\nabla g\left(u\right)^{T}\left(v-u\right)=\sum_{i=1}^{m}\gamma_{i}f_{i}\left(u\right)+\left(\sum_{i=1}^{m}\nabla\gamma_{i}f_{i}\left(u\right)\right)^{T}\left(v-u\right)\\
+ & =\sum_{i=1}^{m}\gamma_{i}f_{i}\left(u\right)+\sum_{i=1}^{m}\nabla\gamma_{i}f_{i}\left(u\right)^{T}\left(v-u\right)=\sum_{i=1}^{m}\left(\gamma_{i}f_{i}\left(u\right)+\nabla\gamma_{i}f_{i}\left(u\right)^{T}\left(v-u\right)\right)\\
+ & =\sum_{i=1}^{m}\gamma_{i}\left(f_{i}\left(u\right)+\nabla f_{i}\left(u\right)^{T}\left(v-u\right)\right)\underset{\text{f_{i} convexity}}{\le}\sum_{i=1}^{m}\gamma_{i}f\left(v\right)=g\left(v\right)
+\end{align*}
+
+\end_inset
+
+And thus by the fist order condition 
+\begin_inset Formula $g$
+\end_inset
+
+ is convex.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f(x)=\left(x-4\right)^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x)=x^{2}$
+\end_inset
+
+, then clearly both 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+ are convex as their second order derivatives is 
+\begin_inset Formula $2$
+\end_inset
+
+, and thus clearly non-negative.
+\begin_inset Newline newline
+\end_inset
+
+Yet 
+\begin_inset Formula $h(x)=f\left(g\left(x\right)\right)=\left(x^{2}-4\right)^{2}$
+\end_inset
+
+ is non-convex, as: 
+\begin_inset Formula 
+\begin{align*}
+ & h'(x)=2\left(x^{2}-4\right)2x=4x^{3}-16x\\
+ & h''\left(x\right)=12x^{2}-16
+\end{align*}
+
+\end_inset
+
+ And so for any 
+\begin_inset Formula $x\in\left(-\sqrt{4/3},\sqrt{4/3}\right)$
+\end_inset
+
+ the second order derivative of 
+\begin_inset Formula $h$
+\end_inset
+
+ is negative and thus it is not convex.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+
+\bar under
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+:
+\bar default
+ Let 
+\begin_inset Formula $f:C\rightarrow\mathbb{R}$
+\end_inset
+
+ be a convex function defined over a convex set 
+\begin_inset Formula $C$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Then for any 
+\begin_inset Formula $\left(u,t_{1}\right),\left(v,t_{2}\right)\in epi\left(f\right)$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha\in\left[0,1\right]$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+f(\alpha u+\left(1-\alpha\right)v)\underset{\text{\ensuremath{f} is convex}}{\le}\alpha f(u)+\left(1-\alpha\right)f(v)\underset{{\scriptscriptstyle \left(u,t_{1}\right),\left(v,t_{2}\right)\in epi\left(f\right)}}{\le}\alpha t_{1}+\left(1-\alpha\right)t_{2}
+\end{align*}
+
+\end_inset
+
+And so 
+\begin_inset Formula $\alpha\left(u,t_{1}\right)+\left(1-\alpha\right)\left(v,t_{2}\right)=\left(\alpha u+\left(1-\alpha\right)v,\alpha t_{1}+\left(1-\alpha\right)t_{2}\right)\in epi\left(f\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\begin_inset Formula $epi\left(f\right)$
+\end_inset
+
+ is a convex set.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\bar under
+
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $\Leftarrow$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+:
+\bar default
+ Let 
+\begin_inset Formula $epi\left(f\right)$
+\end_inset
+
+ be a convex set.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $u,v\in V$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha\in\left[0,1\right]$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+It holds that 
+\begin_inset Formula $\left(u,f(u)\right),\left(v,\right)f(v)\in epi\left(f\right)$
+\end_inset
+
+ as 
+\begin_inset Formula $f(x)\le f(x)$
+\end_inset
+
+, and so by 
+\begin_inset Formula $epi\left(f\right)$
+\end_inset
+
+ convexity it holds that: 
+\begin_inset Formula 
+\begin{align*}
+\alpha\left(u,f(u)\right)+\left(1-\alpha\right)\left(v,f(v)\right) & =\left(\alpha u+\left(1-\alpha\right)v,\alpha f(u)+\left(1-\alpha\right)f(v)\right)\in epi\left(f\right)\\
+ & \Updownarrow\\
+f(\alpha u+\left(1-\alpha\right)v) & \le\alpha f(u)+\left(1-\alpha\right)f(v)
+\end{align*}
+
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ is a convex function.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f_{i}:V\rightarrow\mathbb{R}$
+\end_inset
+
+ for any 
+\begin_inset Formula $i\in I$
+\end_inset
+
+ be a convex function.
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $\alpha\in\left[0,1\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $u,v\in V:$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+f\left(\alpha u+\left(1-\alpha\right)v\right) & =\underset{i\in I}{sup}f_{i}\left(\alpha u+\left(1-\alpha\right)v\right)\underset{\text{\ensuremath{{\scriptscriptstyle \text{f_{i}convex \& supremum monotonicity}}}}}{\le}\\
+ & \le\underset{i\in I}{sup}\left[\alpha f_{i}\left(u\right)+\left(1-\alpha\right)f_{i}\left(v\right)\right]\underset{{\scriptscriptstyle \text{sup arithmetics}}}{=}\\
+ & \alpha\underset{i\in I}{sup}f_{i}\left(u\right)+\left(1-\alpha\right)\underset{i\in I}{sup}f_{i}\left(v\right)=\alpha f\left(u\right)+\left(1-\alpha\right)f\left(v\right)
+\end{align*}
+
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+5.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f(w)=l_{x,y}^{hinge}\left(w,b\right)=max\left(0,1-y\left(w^{T}x+b\right)\right)$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+As we have seen in recitation and proved above, the maximum of two convex
+ functions is also convex, and as such since 
+\begin_inset Formula $0$
+\end_inset
+
+ is trivialy convex, it is left to show the 
+\begin_inset Formula $1-y\left(w^{T}x+b\right)$
+\end_inset
+
+ is convex in 
+\begin_inset Formula $w,b$
+\end_inset
+
+ and the rest would follow.
+\begin_inset Newline newline
+\end_inset
+
+Let us use the second order condition for convexity: 
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\partial}{\partial w}1-y\left(w^{T}x+b\right)=-yx\Rightarrow\begin{cases}
+\frac{\partial}{\partial w}-yx=0\\
+\frac{\partial}{\partial b}-yx=0
+\end{cases}\\
+ & \frac{\partial}{\partial b}1-y\left(w^{T}x+b\right)=-y\Rightarrow\begin{cases}
+\frac{\partial}{\partial w}-y=0\\
+\frac{\partial}{\partial b}-y=0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+And so the hessian of 
+\begin_inset Formula $1-y\left(w^{T}x+b\right)$
+\end_inset
+
+ is a zeros matrix which is clearly a PSD, and thus 
+\begin_inset Formula $1-y\left(w^{T}x+b\right)$
+\end_inset
+
+ (a linear function) is convex in 
+\begin_inset Formula $w,b$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+As mentioned 
+\begin_inset Formula $l_{x,y}^{hinge}$
+\end_inset
+
+ as a maximum of two convex functions is also convex.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+
+\series bold
+\bar under
+If 
+\begin_inset Formula $1-y\left(w^{T}x+b\right)\ge0:$
+\end_inset
+
+
+\series default
+\bar default
+ then 
+\begin_inset Formula $l_{x,y}^{hinge}\left(w,b\right)=1-y\left(w^{T}x+b\right)$
+\end_inset
+
+ and as it is differentiable at 
+\begin_inset Formula $w,b$
+\end_inset
+
+ and it's gradient is 
+\begin_inset Formula $-y\left(x+1\right)$
+\end_inset
+
+ thus it is also a sub-gradient of it.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+\bar under
+If 
+\begin_inset Formula $1-y\left(w^{T}x+b\right)<0:$
+\end_inset
+
+
+\series default
+\bar default
+ then 
+\begin_inset Formula $l_{x,y}^{hinge}\left(w,b\right)=0$
+\end_inset
+
+ and as it is differentiable at 
+\begin_inset Formula $w,b$
+\end_inset
+
+ and it's gradient is 
+\begin_inset Formula $0$
+\end_inset
+
+ thus it is also a sub-gradient of it.
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f_{1}.\dots,f_{m}:\mathbb{R}^{d}\rightarrow\mathbb{R}$
+\end_inset
+
+ convex functions and 
+\begin_inset Formula $\xi_{k}\in\partial f_{k}\left(x\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+, define 
+\begin_inset Formula $f\left(x\right)=\sum_{i=1}^{m}f_{i}\left(x\right)$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $x_{0}\in\mathbb{R}^{d}$
+\end_inset
+
+ then by the sub-gradient defenition it holds that for any 
+\begin_inset Formula $k\in\left[m\right]$
+\end_inset
+
+ 
+\begin_inset Formula $f_{k}\left(x\right)\ge f_{k}\left(x_{0}\right)+\left\langle \xi_{k},x-x_{0}\right\rangle $
+\end_inset
+
+, as such: 
+\begin_inset Formula 
+\begin{align*}
+ & f\left(x\right)=\sum_{i=1}^{m}f_{i}\left(x\right)\ge\sum_{i=1}^{m}\left(f_{i}\left(x_{0}\right)+\left\langle \xi_{i},x-x_{0}\right\rangle \right)\\
+ & =\sum_{i=1}^{m}f_{i}\left(x_{0}\right)+\sum_{i=1}^{m}\left\langle \xi_{i},x-x_{0}\right\rangle =f\left(x_{0}\right)+\sum_{i=1}^{m}\xi_{i}^{T}\left(x-x_{0}\right)\\
+ & =f\left(x_{0}\right)+\left(\sum_{i=1}^{m}\xi_{i}\right)^{T}\left(x-x_{0}\right)=f\left(x_{0}\right)+\left\langle \sum_{i=1}^{m}\xi_{i},x-x_{0}\right\rangle 
+\end{align*}
+
+\end_inset
+
+ and so by defention, 
+\begin_inset Formula $\sum_{i=1}^{m}\xi_{i}\in\partial f\left(x\right)=\partial\sum_{i=1}^{m}f_{i}\left(x\right).$
+\end_inset
+
+
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $f\left(w,b\right)=\frac{1}{m}\sum_{i=1}^{m}l_{x_{i},y_{i}}^{hinge}\left(w,b\right)+\frac{\lambda}{2}\left|\left|w\right|\right|^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $w,b\in\mathbb{R}^{d}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Firstly, as seen in recitation 
+\begin_inset Formula $\partial\left(\alpha f\right)=\alpha\cdot\partial f$
+\end_inset
+
+ as for any 
+\begin_inset Formula $g\in\partial h(x)$
+\end_inset
+
+ then 
+\begin_inset Formula $\alpha h(x)\ge\alpha\left(h\left(x_{0}\right)+\left\langle g,x-x_{0}\right\rangle \right)=\alpha h\left(x_{0}\right)+\left\langle \alpha g,x-x_{0}\right\rangle $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Next, as 
+\begin_inset Formula $\frac{\lambda}{2}\left|\left|w\right|\right|^{2}$
+\end_inset
+
+ is differentiable and convex, using the chain rule, its sub-gradient for
+ any 
+\begin_inset Formula $w$
+\end_inset
+
+ is 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\begin_inset Formula $\left|\left|w\right|\right|$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Lastly, as we have shown above, for finite sum of convex functions any sub-gradi
+ents sum is sub-gradient of the sum of the functions, using the aforementioned
+ in addition to our proof of 
+\begin_inset Formula $l_{x,y}^{hinge}$
+\end_inset
+
+ being a convex function, we may apply sub-gradient arithmetics: 
+\begin_inset Formula 
+\begin{align*}
+ & \partial f\left(w,b\right)=\partial\frac{1}{m}\sum_{i=1}^{m}l_{x_{i},y_{i}}^{hinge}\left(w,b\right)+\frac{\lambda}{2}\left|\left|w\right|\right|^{2}=\\
+ & \frac{1}{m}\sum_{i=1}^{m}\partial l_{x_{i},y_{i}}^{hinge}\left(w,b\right)+\lambda\left|\left|w\right|\right|
+\end{align*}
+
+\end_inset
+
+Therefore setting 
+\begin_inset Formula $\partial l_{x_{i},y_{i}}^{hinge}$
+\end_inset
+
+ to be the sub-gradient found in section (b) we find a member of the sub-gradien
+t of 
+\begin_inset Formula $f$
+\end_inset
+
+ for each 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Multi Layer Perceptron (MLP) for for digit classification (MNIST) 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+7.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+I have experimented with the following values:
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mini batch size
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename batch_size.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Learning rate
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename eta.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename arch_2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename arch_4.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+I have concluded that the optimal architecture is either 
+\begin_inset Formula $\left[784,64,64,10\right]$
+\end_inset
+
+ with batch size of 
+\begin_inset Formula $20$
+\end_inset
+
+, and learning rate set to 
+\begin_inset Formula $3$
+\end_inset
+
+.
+ It seems by the figures above that the actual architecture of the model
+ had the learning rate has the greatest effect on the module.
+\begin_inset Newline newline
+\end_inset
+
+The best accuracy I have achieved within 30 epochs was ~0.96.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Final Model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename final.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

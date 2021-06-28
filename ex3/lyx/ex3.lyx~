@@ -1,0 +1,1068 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{culmus}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{bbm}
+\end_preamble
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Itemize
+  ItemSep 2
+  ParSep 2
+End
+Style Enumerate
+  ItemSep 10
+  ParSep 2
+End
+Style Enumerate-Resume
+  ItemSep 10
+  ParSep 2
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{%
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+underline{Introduction to Machine Learning (67577)}
+\backslash
+
+\backslash
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+large Exercise 3 - Classification
+\backslash
+
+\backslash
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+
+\series bold
+Dor Roter
+\begin_inset Newline newline
+\end_inset
+
+208772251
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Bayes Optimal and LDA
+\end_layout
+
+\begin_layout Enumerate
+let 
+\begin_inset Formula 
+\begin{align*}
+\forall x\in\mathcal{X} & h_{\mathcal{D}}(x)=\begin{cases}
++1 & \mathbb{P}\left(y=1|x\right)\ge\frac{1}{2}\\
+-1 & otherwise
+\end{cases}
+\end{align*}
+
+\end_inset
+
+Using Bayes equation it holds that for every 
+\begin_inset Formula $x\in\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $y\in\mathcal{Y}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)\underset{Bayes}{=}\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x,y\right)\underset{Bayes}{=}\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(y|x\right)\mathbb{P}\left(x\right)=\begin{cases}
++1 & \mathbb{P}\left(y=1|x\right)\mathbb{P}\left(x\right)\ge\mathbb{P}\left(y=-1|x\right)\mathbb{P}\left(x\right)\\
+-1 & otherwise
+\end{cases}
+\end{align*}
+
+\end_inset
+
+now, as 
+\begin_inset Formula $y\in\mathcal{Y}=\left\{ \pm1\right\} $
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\forall x\in\mathcal{X}\quad & \mathbb{P}\left(y=1|x\right)+\mathbb{P}\left(y=-1|x\right)=1\\
+\\
+\Rightarrow & \mathbb{P}\left(y=1|x\right)\mathbb{P}\left(x\right)\ge\mathbb{P}\left(y=-1|x\right)\mathbb{P}\left(x\right)\\
+\Leftrightarrow & \mathbb{P}\left(y=1|x\right)\ge\mathbb{P}\left(y=-1|x\right)\\
+\Leftrightarrow & \mathbb{P}\left(y=1|x\right)\ge\frac{1}{2}
+\end{align*}
+
+\end_inset
+
+ And therefore it holds as required that: 
+\begin_inset Formula 
+\begin{align*}
+\forall x\in\mathcal{X}\quad & \underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)=h_{\mathcal{D}}(x)=\begin{cases}
++1 & \mathbb{P}\left(y=1|x\right)\ge\frac{1}{2}\\
+-1 & otherwise
+\end{cases} & \square
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let us note: 
+\begin_inset Formula 
+\begin{align*}
+h_{\mathcal{D}}\left(x\right)=\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)=\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)=\underset{y\in\left\{ \pm1\right\} }{argmax}\:\overline{\delta}_{y}(x)
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\overline{\delta}_{y}(x)=\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, since the 
+\begin_inset Formula $ln$
+\end_inset
+
+ function is a monotonically increasing function, finding the maximizer
+ 
+\begin_inset Formula $y\in\left\{ \pm1\right\} $
+\end_inset
+
+ for 
+\begin_inset Formula $\overline{\delta}$
+\end_inset
+
+ is in fact equivalent to finding the maximizer over:
+\begin_inset Formula 
+\begin{align*}
+\overline{\delta}'_{y}(x)=ln\left(\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)\right)
+\end{align*}
+
+\end_inset
+
+And thus: 
+\begin_inset Formula 
+\begin{align*}
+ & \overline{\delta}'_{y}(x)=ln\left(\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)\right)=ln\left(f(x|y)\mathbb{P}(y)\right)=\\
+ & ln\left(\frac{1}{\sqrt{\left(2\pi\right)^{d}det\left(\Sigma\right)}}\cdot exp\left\{ -\frac{1}{2}\left(x-\mu_{y}\right)^{T}\Sigma^{-1}\left(x-\mu_{y}\right)\right\} \mathbb{P}(y)\right)=\\
+ & ln\left(exp\left\{ -\frac{1}{2}\left(x-\mu_{y}\right)^{T}\Sigma^{-1}\left(x-\mu_{y}\right)\right\} \right)-ln\left(\sqrt{\left(2\pi\right)^{d}det\left(\Sigma\right)}\right)+ln\left(\mathbb{P}(y)\right)=\\
+ & -\frac{1}{2}\left(x^{T}-\mu_{y}^{T}\right)\left(\Sigma^{-1}x-\Sigma^{-1}\mu_{y}\right)-ln\left(\sqrt{\left(2\pi\right)^{d}det\left(\Sigma\right)}\right)+ln\left(\mathbb{P}(y)\right)
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $d,x$
+\end_inset
+
+ and 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ are constants relative to 
+\begin_inset Formula $y$
+\end_inset
+
+, finding the maximizer to 
+\begin_inset Formula $\overline{\delta}'$
+\end_inset
+
+ is also equivalent to finding the maximizing 
+\begin_inset Formula $y$
+\end_inset
+
+ over:
+\begin_inset Formula 
+\begin{align*}
+\delta'_{y}(x) & =\overline{\delta}'_{y}(x)+ln\left(\sqrt{\left(2\pi\right)^{d}det\left(\Sigma\right)}\right)=\\
+ & -\frac{1}{2}\left(x^{T}-\mu_{y}^{T}\right)\left(\Sigma^{-1}x-\Sigma^{-1}\mu_{y}\right)+ln\left(\mathbb{P}(y)\right)=\\
+ & \frac{1}{2}\left(\left(x^{T}\Sigma^{-1}\mu_{y}-\mu_{y}^{T}\Sigma^{-1}\mu_{y}\right)+\left(\mu_{y}^{T}\Sigma^{-1}x-x^{T}\Sigma^{-1}x\right)\right)+ln\left(\mathbb{P}(y)\right)
+\end{align*}
+
+\end_inset
+
+once again, as 
+\begin_inset Formula $x^{T}\Sigma^{-1}x$
+\end_inset
+
+ is constant in relation to 
+\begin_inset Formula $y$
+\end_inset
+
+, maximizing 
+\begin_inset Formula $\overline{\delta}$
+\end_inset
+
+' over 
+\begin_inset Formula $y$
+\end_inset
+
+ is equivalent to finding the maximizer y over: 
+\begin_inset Formula 
+\begin{align*}
+ & \delta{}_{y}(x)=\delta'_{y}(x)+\frac{1}{2}x^{T}\Sigma^{-1}x=\\
+ & \frac{1}{2}\left(\left(x^{T}\Sigma^{-1}\mu_{y}-\mu_{y}^{T}\Sigma^{-1}\mu_{y}\right)+\left(\mu_{y}^{T}\Sigma^{-1}x-x^{T}\Sigma^{-1}x\right)\right)+ln\left(\mathbb{P}(y)\right)=\\
+ & \frac{1}{2}\left(x^{T}\Sigma^{-1}\mu_{y}+\mu_{y}^{T}\Sigma^{-1}x\right)-\frac{1}{2}\mu_{y}^{T}\Sigma^{-1}\mu_{y}+ln\left(\mathbb{P}(y)\right)
+\end{align*}
+
+\end_inset
+
+now we note that: 
+\begin_inset Formula 
+\begin{align*}
+ & x^{T}\Sigma^{-1}\mu_{y}+\mu_{y}^{T}\Sigma^{-1}x=x^{T}\Sigma^{-1}\mu_{y}+\left\langle \mu_{y}|\Sigma^{-1}x\right\rangle =\\
+ & x^{T}\Sigma^{-1}\mu_{y}+\left\langle \Sigma^{-1}x|\mu_{y}\right\rangle =\\
+ & x^{T}\Sigma^{-1}\mu_{y}+\left(\Sigma^{-1}x\right)^{T}\mu_{y}=\\
+ & x^{T}\Sigma^{-1}\mu_{y}+x^{T}\left(\Sigma^{-1}\right)^{T}\mu_{y}
+\end{align*}
+
+\end_inset
+
+since 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is the covariance matrix, its a symetric 
+\begin_inset Formula $d\times d$
+\end_inset
+
+ matrix: 
+\begin_inset Formula 
+\begin{align*}
+\Sigma^{T}=\Sigma\Rightarrow\Sigma^{-1}=\underset{\overbrace{\text{transpose properties}}}{\left(\Sigma^{T}\right)^{-1}=\left(\Sigma^{-1}\right)^{T}}
+\end{align*}
+
+\end_inset
+
+and thus 
+\begin_inset Formula $\Sigma^{-1}=\left(\Sigma^{-1}\right)^{T}$
+\end_inset
+
+ and it holds that: 
+\begin_inset Formula 
+\begin{align*}
+x^{T}\Sigma^{-1}\mu_{y}+\mu_{y}^{T}\Sigma^{-1}x=x^{T}\Sigma^{-1}\mu_{y}+x^{T}\left(\Sigma^{-1}\right)^{T}\mu_{y}=2x^{T}\Sigma^{-1}\mu_{y}
+\end{align*}
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align*}
+\Rightarrow & \delta_{y}(x)= & \frac{1}{2}\left(x^{T}\Sigma^{-1}\mu_{y}+\mu_{y}^{T}\Sigma^{-1}x\right)-\frac{1}{2}\mu_{y}^{T}\Sigma^{-1}\mu_{y}+ln\left(\mathbb{P}(y)\right)=\\
+ &  & x^{T}\Sigma^{-1}\mu_{y}-\frac{1}{2}\mu_{y}^{T}\Sigma^{-1}\mu_{y}+ln\left(\mathbb{P}(y)\right)
+\end{align*}
+
+\end_inset
+
+ summing it all up we get 
+\begin_inset Formula 
+\begin{align*}
+h_{\mathcal{D}}\left(x\right)=\underset{y\in\left\{ \pm1\right\} }{argmax}\mathbb{P}\left(x|y\right)\mathbb{P}\left(y\right)=\underset{y\in\left\{ \pm1\right\} }{argmax}\:\delta_{y}(x) &  & \square
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+As we have seen in statistics and in recitation the unbiased estimator for
+ mean is the average:
+\begin_inset Formula 
+\begin{align*}
+\hat{\mu}=\frac{1}{\left|S\right|}\sum_{x_{i}\in S}x_{i}
+\end{align*}
+
+\end_inset
+
+since we aim to compute the mean for each of the classes separately, we
+ need to compute it seperately for each class and thus we can denote it
+ as follows using indicator notation: 
+\begin_inset Formula 
+\begin{align*}
+\forall y\in\left\{ \pm1\right\} \quad & \hat{\mu}_{y}=\frac{1}{\sum_{i=1}^{m}\mathbbm{1}\left[y_{i}=y\right]}\sum_{i=1}^{m}x_{i}\cdot\mathbbm{1}\left[y_{i}=y\right]
+\end{align*}
+
+\end_inset
+
+Next, we can use our knowledge of the mean estimator to compute the covariance
+ matrix unbiased estimator (
+\begin_inset Formula $\Sigma=\mathbb{E}\left[\left(X-\mathbb{E}\left[X\right]\right)\left(X-\mathbb{E}\left[X\right]\right)^{T}\right]$
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+Furthermore, we note that for each sample class we have a different mean
+ (
+\begin_inset Formula $\mu_{y}$
+\end_inset
+
+) and thus the covariance matrix for all samples can be commputed by seperating
+ the computation of each 
+\begin_inset Formula $y\in\left\{ \pm1\right\} $
+\end_inset
+
+ and using the appropriate 
+\begin_inset Formula $\mu_{y}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\overline{\Sigma}=\frac{1}{m}\sum_{y\in\left\{ \pm1\right\} }\sum_{i\in\left\{ j\in\left[m\right]\left|y_{j}=y\right.\right\} }\left[\left(x_{i}-\hat{\mu_{y}}\right)\left(x_{i}-\hat{\mu_{y}}\right)^{T}\right]
+\end{align*}
+
+\end_inset
+
+By computing the bias we can note that this estimator is biased by a factor
+ of 
+\begin_inset Formula $\frac{m}{m-1}$
+\end_inset
+
+, and thus an unbiased estimator for the covariance matrix would be: 
+\begin_inset Formula 
+\begin{align*}
+\hat{\Sigma}=\frac{1}{m-1}\sum_{y\in\left\{ \pm1\right\} }\sum_{i\in\left\{ j\in\left[m\right]\left|y_{j}=y\right.\right\} }\left[\left(x_{i}-\hat{\mu_{y}}\right)\left(x_{i}-\hat{\mu_{y}}\right)^{T}\right]
+\end{align*}
+
+\end_inset
+
+Lastly, as seen in the recitiation: 
+\begin_inset Formula 
+\begin{align*}
+\hat{p}_{MLE}=\frac{1}{m}\mathbbm{1}\left[y_{i}=1\right]
+\end{align*}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Spam
+\end_layout
+
+\begin_layout Enumerate-Resume
+The two error kinds our classifier might make tagging a normal email as
+ spam, or not tagging a spam email as spam.
+\begin_inset Newline newline
+\end_inset
+
+Out of the two error types, we are more likely to prefer our classifier
+ to be a bit 
+\begin_inset Quotes eld
+\end_inset
+
+looser
+\begin_inset Quotes erd
+\end_inset
+
+, allowing some spam to pass through, rather than too strict, which could
+ lead the classifier to classifying important emails as spam which might
+ lead our user to miss them.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Accordingly, we would note the tag 
+\begin_inset Quotes eld
+\end_inset
+
+spam
+\begin_inset Quotes erd
+\end_inset
+
+ as the posetive label, and the tag 
+\begin_inset Quotes eld
+\end_inset
+
+not-spam
+\begin_inset Quotes erd
+\end_inset
+
+ as the negative label, and thuse our Type-I (false-posetive) error would
+ be tagging an email as spam, when it's not (which we have decided to be
+ the worse error out of the two).
+\end_layout
+
+\begin_layout Section
+SVM- Formulation
+\end_layout
+
+\begin_layout Enumerate-Resume
+First let us note that 
+\begin_inset Formula $||w||^{2}=\left\langle w|w\right\rangle $
+\end_inset
+
+ and thus, by denoting 
+\begin_inset Formula 
+\begin{align*}
+ & Q=2\begin{bmatrix}I_{d}\\
+ & 0
+\end{bmatrix}\\
+ & v=\begin{pmatrix}w\\
+b
+\end{pmatrix}\\
+ & a=0_{d+1}
+\end{align*}
+
+\end_inset
+
+ we achieve 
+\begin_inset Formula $||w||^{2}=\left\langle w|w\right\rangle =w^{T}w=\frac{1}{2}w^{T}2I_{d}w+0^{T}v\underset{\mathclap{\overbrace{{\scriptscriptstyle \text{block matrix mult.}}}}}{=}\frac{1}{2}v^{T}Qv+a^{T}v$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+next, we will define 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $d$
+\end_inset
+
+ by constructing it so that each row 
+\begin_inset Formula $A_{i}v\le d_{i}$
+\end_inset
+
+ is equivalent to the equation 
+\begin_inset Formula $y_{i}\left(\left\langle w|x_{i}\right\rangle +b\right)\ge1$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+ & y_{i}\left(\left\langle w|x_{i}\right\rangle +b\right)=y_{i}\left(\left\langle x_{i}|w\right\rangle +b\right)=\\
+ & =y_{i}x_{i}^{T}w+y_{i}b=\begin{pmatrix}\cdots y_{i}x_{i}^{T}\cdots & y_{i}\end{pmatrix}\begin{pmatrix}w\\
+b
+\end{pmatrix}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\\
+\Rightarrow & y_{i}\left(\left\langle w|x_{i}\right\rangle +b\right)\ge1\Leftrightarrow-y_{i}\left(\left\langle w|x_{i}\right\rangle +b\right)\le-1\\
+\Leftrightarrow & -\begin{pmatrix}\cdots y_{i}x_{i}^{T}\cdots & y_{i}\end{pmatrix}\begin{pmatrix}w\\
+b
+\end{pmatrix}\le-1
+\end{align*}
+
+\end_inset
+
+Therefore for 
+\begin_inset Formula $A_{i}=-\begin{pmatrix}\cdots y_{i}x_{i}^{T}\cdots & y_{i}\end{pmatrix}$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{i}=-1$
+\end_inset
+
+ we achieve our goal of representing the constraints using the required
+ notation: 
+\begin_inset Formula 
+\begin{align*}
+ & A=-\begin{pmatrix}\cdots y_{1}x_{1}^{T}\cdots & y_{1}\\
+\vdots & \vdots\\
+\cdots y_{m}x_{m}^{T}\cdots & y_{m}
+\end{pmatrix}\\
+ & d=\begin{pmatrix}-1\\
+\vdots\\
+-1
+\end{pmatrix}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let us denote the following:
+\begin_inset Formula 
+\begin{align*}
+\left(*\right) & \underset{w,\left\{ \xi_{i}\right\} }{argmin}\;\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi_{i}\text{ s.t }\forall i\;y_{i}\left\langle w|x_{i}\right\rangle \ge1-\xi_{i}\text{ and }\xi_{i}\ge0\\
+\left(**\right) & \underset{w}{argmin}\;\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )
+\end{align*}
+
+\end_inset
+
+Since the minimization in the Soft-SVM problem is under the the constraints
+ 
+\begin_inset Formula $y_{i}\left\langle w|x_{i}\right\rangle \ge1-\xi_{i}\text{ and }\xi_{i}\ge0$
+\end_inset
+
+ for each 
+\begin_inset Formula $i\in\left[m\right]$
+\end_inset
+
+, let 
+\begin_inset Formula $w\in\mathbb{R}^{d}$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+\forall i\in\left[m\right]\; & y_{i}\left\langle w|x_{i}\right\rangle \ge1-\xi_{i}\;\wedge\;\xi_{i}\ge0\\
+\Leftrightarrow & \xi_{i}\ge1-y_{i}\left\langle w|x_{i}\right\rangle \;\wedge\;\xi_{i}\ge0\\
+\Leftrightarrow & \xi_{i}\ge max\left\{ 1-y_{i}\left\langle w|x_{i}\right\rangle ,0\right\} =\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )
+\end{align*}
+
+\end_inset
+
+Therefore, for any 
+\begin_inset Formula $w\in\mathbb{R}^{d}$
+\end_inset
+
+ it holds that the best 
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ for the porpuse of minimization under the provided constraints is 
+\begin_inset Formula $\underline{\boldsymbol{\xi_{i}=\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )}}$
+\end_inset
+
+, as any smaller value would not be legal by the lema above.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Therefore, assuming by way of contradiction that there exists 
+\begin_inset Formula $w'\in\mathbb{R}^{d}$
+\end_inset
+
+ such as that 
+\begin_inset Formula $w'$
+\end_inset
+
+ is a solution of 
+\begin_inset Formula $\left(*\right)$
+\end_inset
+
+ but is not a solution of 
+\begin_inset Formula $\left(**\right)$
+\end_inset
+
+ we get: 
+\begin_inset Formula 
+\begin{align*}
+ & \exists\left\{ \xi_{i}\right\} \:s.t\:\left(w',\left\{ \xi'_{i}\right\} \right)\in\left(*\right)\\
+\Rightarrow & \underset{w,\left\{ \xi_{i}\right\} }{min}\;\left\{ \frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi_{i}\left|\forall i\;y_{i}\left\langle w|x_{i}\right\rangle \ge1-\xi_{i}\text{ and }\xi_{i}\ge0\right.\right\} =\\
+ & \frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi'_{i}\underset{\text{prev. lema}}{\ge}\frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w'|x_{i}\right\rangle )
+\end{align*}
+
+\end_inset
+
+since, 
+\begin_inset Formula $w'$
+\end_inset
+
+ is 
+\series bold
+not
+\series default
+ a solution of 
+\begin_inset Formula $\left(**\right)$
+\end_inset
+
+, it must not minimize the expression, and thus for any 
+\begin_inset Formula $w\in\mathbb{R}^{d}$
+\end_inset
+
+, where 
+\begin_inset Formula $w$
+\end_inset
+
+ is a solution of 
+\begin_inset Formula $\left(**\right)$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+\frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi'_{i}\underset{\text{prev. lema}}{=}\frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w'|x_{i}\right\rangle )\underset{assumption}{>}\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )\\
+=\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi_{i}
+\end{align*}
+
+\end_inset
+
+And thus any the solution 
+\begin_inset Formula $w',\left\{ \xi'_{i}\right\} $
+\end_inset
+
+ is not a minimizer of the expression, and we reach a contradiction to the
+ initial assumption.
+\begin_inset Newline newline
+\end_inset
+
+Accordingly, for any 
+\begin_inset Formula $w\in\mathbb{R}^{d}$
+\end_inset
+
+ such as that 
+\begin_inset Formula $w$
+\end_inset
+
+ is a solution of 
+\begin_inset Formula $\left(**\right)$
+\end_inset
+
+ but not a solution of 
+\begin_inset Formula $\left(*\right)$
+\end_inset
+
+, we reach by using similar claims to a contradiction to 
+\begin_inset Formula $w$
+\end_inset
+
+ being a minimizer: 
+\begin_inset Formula 
+\begin{align*}
+\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )\underset{\text{prev. lema}}{=}\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi_{i}>\frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi'_{i}=\\
+\underset{\text{prev. lema}}{=}\frac{\lambda}{2}||w'||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w'|x_{i}\right\rangle )\\
+\end{align*}
+
+\end_inset
+
+Proving that in fact:
+\begin_inset Formula 
+\begin{align*}
+\left(*\right) & \underset{w,\left\{ \xi_{i}\right\} }{argmin}\;\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\xi_{i}\text{ s.t }\forall i\;y_{i}\left\langle w|x_{i}\right\rangle \ge1-\xi_{i}\text{ and }\xi_{i}\ge0\\
+\Updownarrow &  & \square\\
+\left(**\right) & \underset{w}{argmin}\;\frac{\lambda}{2}||w||^{2}+\frac{1}{m}\sum_{i=1}^{m}\ell^{hinge}(y_{i}\left\langle w|x_{i}\right\rangle )
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Implemention and simulation-comparison of different classifiers
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+9.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{enumi}{9}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\hphantom{a}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q.9.emf
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Data plots with classifiers hypothesis hyperplanes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hphantom{a}$
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q.10.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Training set size effect on the classifiers average performance
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+It is clear that the SVM classifier outpreformed the rest of the classifiers,
+ with the Perceptron algorithm being right behind, and the LDA coming at
+ last.
+\begin_inset Newline newline
+\end_inset
+
+First thing first, as SVM maximizes the margin, it seems quit logical that
+ it generelizes well.
+ Next, the Perceptron optimizes by 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ steps over each sample which might be why it came so close to the SVM.
+\begin_inset Newline newline
+\end_inset
+
+Lastly, the LDA model assumes the data was sampled from two gaussians sharing
+ the same covariance matrix, since the data was not created this way, it's
+ not surprising the LDA model did not preform as well.
+ 
+\end_layout
+
+\begin_layout Section
+MNIST Dataset
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+14.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{enumi}{14}
+\end_layout
+
+\end_inset
+
+As expected k-nearest-neighbors has the highest running time as it just
+ stores the training set, and uses it to go through the entirety of the
+ data in order to make each prediction which makes it relatively expensive
+ computationaly speaking.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Next, we have the Soft-SVM algorithm, which as we have seen needs to calcualted
+ the support vectors by testing each sample against all others and thus
+ its also effected by the increase in dataset size as seen in the plot below.
+\begin_inset Newline newline
+\end_inset
+
+So clearly those 2 models training/prediction is affected by the training
+ set size as they require several operations to be made for each sample.
+\begin_inset Newline newline
+\end_inset
+
+Lastly, both decisions trees and logistic regresion are quit fast as both
+ are able to make a prediction and train using constant amount of operations
+ on the samples (I have limited the tree's hight and thus the training set
+ size does not effect the running time as much).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename q.14.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Classification models accuracy and running times against rising training
+ set sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,1365 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{culmus}
+\usepackage{titling}
+\usepackage{tikz}
+\end_preamble
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Itemize
+  ItemSep 2
+  ParSep 2
+End
+Style Enumerate
+  ItemSep 10
+  ParSep 2
+End
+Style Enumerate-Resume
+  ItemSep 10
+  ParSep 2
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{%
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+underline{Introduction to Machine Learning (67577)}
+\backslash
+
+\backslash
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+large Exercise 2 - Linear Regression
+\backslash
+
+\backslash
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+
+\series bold
+Dor Roter
+\begin_inset Newline newline
+\end_inset
+
+208772251
+\end_layout
+
+\begin_layout Section
+Theoretical Questions
+\end_layout
+
+\begin_layout Subsection
+Solutions of the Normal Equations
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $X\in\mathbb{R}^{m\times d}$
+\end_inset
+
+ be a matrix, then 
+\begin_inset Formula 
+\begin{align*}
+Ker(X)=\left\{ v\in\mathbb{R}^{d}\left|Xv=0\right.\right\} =\left\{ v\in\mathbb{R}^{d}\left|X^{T}Xv=X^{T}\cdot0\right.\right\} =\left\{ v\in\mathbb{R}^{d}\left|X^{T}Xv=0\right.\right\} =Ker(X^{T}X) &  & \square
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $A\in\mathbb{R}^{n\times n}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+firstly, let us show that for all 
+\begin_inset Formula $v\in Im(A^{T})$
+\end_inset
+
+ it holds that 
+\begin_inset Formula $v\in Ker(A)^{\perp}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+ & v\in Im(A^{T})\Rightarrow v=A^{T}x\\
+\Rightarrow & \forall u\in Ker(A)\qquad\left\langle v|u\right\rangle =v^{T}\cdot u=\left(A^{T}x\right)^{T}\cdot u=x^{T}A\cdot u=x^{T}\cdot Au=x^{T}\cdot0=0\\
+\text{Therefore: }\; & v\in Im(A^{T})\Rightarrow\left\langle v|x\right\rangle =0\quad\forall x\in Ker(A)\Leftrightarrow v\in Ker(A)^{\perp}
+\end{align*}
+
+\end_inset
+
+as such, it holds that 
+\begin_inset Formula $Im(A^{T})\subseteq Ker(A)^{\perp}.$
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ let us show that for all 
+\begin_inset Formula $v\in Ker(A)^{\perp}$
+\end_inset
+
+ it holds that 
+\begin_inset Formula $v\in Im(A^{T})$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+now, we assume by contradiction that 
+\begin_inset Formula $v\notin Im(A^{T})$
+\end_inset
+
+ and we will show that 
+\begin_inset Formula $v\notin Ker(A)^{\perp}$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\begin{align*}
+ & v\notin Im(A^{T})\Rightarrow v\in Im(A^{T})^{\perp}\\
+therefore:\quad & \forall u\in\mathbb{R}^{n}\quad v^{T}\cdot\left(A^{T}u\right)=\left(Av\right)\cdot u=0
+\end{align*}
+
+\end_inset
+
+as such, it holds that 
+\begin_inset Formula $Av$
+\end_inset
+
+ must be 
+\begin_inset Formula $0$
+\end_inset
+
+, which means 
+\begin_inset Formula $v\in Ker(A)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+but, 
+\begin_inset Formula $v\in Ker(A)\Rightarrow v\notin Ker(A)^{\perp}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, it holds that 
+\begin_inset Formula $Im(A^{T})\supseteq Ker(A)^{\perp}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $Im(A^{T})=Ker(A)^{\perp}$
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $y=Xw$
+\end_inset
+
+ be a non-homogeneous system of linear equations, with 
+\begin_inset Formula $X$
+\end_inset
+
+ as square not invertible matrix.
+\begin_inset Newline newline
+\end_inset
+
+As 
+\begin_inset Formula $X$
+\end_inset
+
+ is not invertible, the equations system could not have a single solution,
+ Therefore there are either 0, or infinitly many solutions for the provided
+ linear equations set.
+\begin_inset Newline newline
+\end_inset
+
+There might be a solution to the equations iff 
+\begin_inset Formula $y\in Im(X)$
+\end_inset
+
+ (could be writen as a linear combination of 
+\begin_inset Formula $X$
+\end_inset
+
+ using the scalars specified in 
+\begin_inset Formula $w$
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+Therefore: 
+\begin_inset Formula 
+\begin{align*}
+y\in Im(X)\underset{q.2}{=}Ker(X^{T})^{\perp}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $y\perp Ker(X^{T})$
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $X^{T}Xw=X^{T}y$
+\end_inset
+
+ be a normal linear system.
+\begin_inset Newline newline
+\end_inset
+
+We will address the two following possibilities for 
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ seprately.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ is invertible:
+\series default
+ then 
+\begin_inset Formula $X^{T}Xw=X^{T}y\Leftrightarrow w=\left(X^{T}X\right)^{-1}X^{T}y$
+\end_inset
+
+ and we have found a single unique solution for the linear system.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ is not invertible:
+\series default
+ since 
+\begin_inset Formula $X^{T}X$
+\end_inset
+
+ is a square matrix, by the lemma proved in q.3: 
+\begin_inset Formula 
+\begin{align*}
+X^{T}y\perp Ker(\left(X^{T}X\right)^{T})=Ker(X^{T}X)\Leftrightarrow"\text{there are \ensuremath{\infty} solutions for \ensuremath{X^{T}Xw=X^{T}y}}"
+\end{align*}
+
+\end_inset
+
+ Let us show 
+\begin_inset Formula $X^{T}y\perp Ker(X^{T}X)$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\forall v\in Ker(X^{T}X)\quad\left\langle X^{T}y|v\right\rangle =\left(X^{T}y\right)^{T}v=y^{T}Xv
+\end{align*}
+
+\end_inset
+
+since we have proved in 
+\begin_inset Formula $q.1$
+\end_inset
+
+ that 
+\begin_inset Formula $Ker\left(X\right)=Ker(X^{T}X)$
+\end_inset
+
+, it holds that 
+\begin_inset Formula $v\in Ker(X^{T}X)\Leftrightarrow v\in Ker(X)\Leftrightarrow Xv=0$
+\end_inset
+
+ and thus: 
+\begin_inset Formula 
+\begin{align*}
+\underset{\overset{\Updownarrow}{X^{T}y\perp Ker(X^{T}X)}}{\underbrace{\forall v\in Ker(X^{T}X)\quad\left\langle X^{T}y|v\right\rangle =y^{T}Xv=y^{T}\cdot0=0}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Projection Matrices
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $V\subseteq\mathbb{R}^{d},dim(V)=k$
+\end_inset
+
+, 
+\begin_inset Formula $v_{1},\dots,v_{k}$
+\end_inset
+
+ be orthonormal basis of 
+\begin_inset Formula $V$
+\end_inset
+
+, and 
+\begin_inset Formula $P=\sum_{l.=1}^{k}v_{l}v_{l}^{T}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate-Resume
+by P's defenition 
+\begin_inset Formula $P_{i,j}=\sum_{l=1}^{k}\left(v_{l}\right)_{i}\cdot\left(v_{l}\right)_{j}=\sum_{l=1}^{k}\left(v_{l}\right)_{j}\cdot\left(v_{l}\right)_{i}=P_{j,i}$
+\end_inset
+
+ and therefore 
+\begin_inset Formula $P$
+\end_inset
+
+'s symetric.
+\end_layout
+
+\begin_layout Enumerate-Resume
+Since 
+\begin_inset Formula $P$
+\end_inset
+
+ is a symetric matrix, it holds that 
+\begin_inset Formula $P$
+\end_inset
+
+ has an EVD decomposition 
+\begin_inset Formula $P=UDU^{T}$
+\end_inset
+
+ where 
+\begin_inset Formula $U$
+\end_inset
+
+ is an orthogonal matrix and 
+\begin_inset Formula $D$
+\end_inset
+
+ is a diagonal matrix.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, 
+\begin_inset Formula $P^{2}=UDU^{T}\cdot UDU^{T}=UD^{2}U^{T}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+By the claim proved in (d), 
+\begin_inset Formula $P^{2}=P$
+\end_inset
+
+, and so 
+\begin_inset Formula $UD^{2}U^{T}=P^{2}=P=UDU^{T}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+As 
+\begin_inset Formula $diag(\lambda_{1}^{2},\dots,\lambda_{k}^{2})=D^{2}=D=diag(\lambda_{1},\dots,\lambda_{k})$
+\end_inset
+
+, it holds that for each 
+\begin_inset Formula $i\in\left[k\right]$
+\end_inset
+
+ 
+\begin_inset Formula $\lambda_{i}=\lambda_{i}^{2}\Leftrightarrow\lambda_{i}\in\left\{ 0,1\right\} .$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Finally for all 
+\begin_inset Formula $i\in\left[k\right]$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+Pv_{i}=\left(\sum_{l=1}^{k}v_{l}v_{l}^{T}\right)\cdot v_{i}=\sum_{l=1}^{k}\left(v_{l}v_{l}^{T}\cdot v_{i}\right)=\sum_{l=1}^{k}v_{l}\left(v_{l}^{T}\cdot v_{i}\right)=\sum_{l=1}^{k}v_{l}\left\langle v_{l}|v_{i}\right\rangle \underset{\overbrace{\overset{v_{1},\dots,v_{k}\text{ are orthonormal}}{\left\langle v_{l}|v_{i}\right\rangle =\begin{cases}
+1 & l=i\\
+0 & l\neq i
+\end{cases}}}}{=}\sum_{l=1}^{k}v_{l}\cdot\delta_{i,l}=v_{i}
+\end{align*}
+
+\end_inset
+
+ and therefore 
+\begin_inset Formula $v_{1},\dots,v_{k}$
+\end_inset
+
+ are the the eigenvectors corresponding to the eigenvalue 1.
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let 
+\begin_inset Formula $v\in V$
+\end_inset
+
+, therefore there is a linear combination of the orthonormal basis of 
+\begin_inset Formula $V$
+\end_inset
+
+, 
+\begin_inset Formula $v_{1},...,v_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{1},...,\alpha_{k}\in\mathbb{R}$
+\end_inset
+
+ such as 
+\begin_inset Formula $v=\sum_{l=1}^{k}\alpha_{i}\cdot v_{i}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Therefore: 
+\begin_inset Formula 
+\begin{align*}
+Pv=\left(\sum_{i=1}^{k}v_{i}v_{i}^{T}\right)\left(\sum_{j=1}^{k}\alpha_{j}v_{j}\right)=\sum_{i=1}^{k}\sum_{j=1}^{k}\left(v_{i}v_{i}^{T}\cdot\alpha_{j}v_{j}\right)=\sum_{i=1}^{k}\sum_{j=1}^{k}\alpha_{j}v_{i}\left\langle v_{i}|v_{j}\right\rangle =\sum_{i=1}^{k}\sum_{j=1}^{k}\alpha_{j}v_{i}\cdot\delta_{i,j}=\sum_{i=1}^{k}\alpha_{i}v_{i}=v
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Using 
+\begin_inset Formula $P$
+\end_inset
+
+'s defenition it holds that:
+\begin_inset Formula 
+\begin{align*}
+P^{2}=\left(\sum_{i=1}^{k}v_{i}v_{i}^{T}\right)\cdot\left(\sum_{j=1}^{k}v_{j}v_{j}^{T}\right)=\sum_{i=1}^{k}\sum_{j=1}^{k}v_{i}v_{i}^{T}v_{j}v_{j}^{T}=\sum_{i=1}^{k}\sum_{j=1}^{k}v_{i}\left\langle v_{i}|v_{j}\right\rangle v_{j}^{T}=\sum_{i=1}^{k}\sum_{j=1}^{k}v_{i}\cdot\delta_{i,j}\cdot v_{j}^{T}=\sum_{i=1}^{k}v_{i}\cdot v_{i}^{T}=P
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Using the pervious lemmas:
+\begin_inset Formula 
+\begin{align*}
+\left(I-P\right)P=P-P^{2}\underset{(d)}{=}P-P=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Least Squares 
+\end_layout
+
+\begin_layout Enumerate-Resume
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+6.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{enumi}{6}
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $X=U\Sigma V^{T}$
+\end_inset
+
+ be the SVD decomposition of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Firstly, we will show 
+\begin_inset Formula $\left(X^{T}X\right)^{-1}=V\left(\Sigma^{T}\Sigma\right)^{-1}V^{T}:$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & X^{T}X=V\Sigma^{T}U^{T}\cdot U\Sigma V^{T}=V\Sigma^{T}\Sigma V^{T}\\
+\Rightarrow & \begin{cases}
+X^{T}X\cdot V\left(\Sigma^{T}\Sigma\right)^{-1}V^{T}=V\Sigma^{T}\Sigma\underset{I}{\underbrace{V^{T}\cdot V}}\left(\Sigma^{T}\Sigma\right)^{-1}V^{T}=V\underset{I}{\underbrace{\left(\Sigma^{T}\Sigma\right)\cdot\left(\Sigma^{T}\Sigma\right)^{-1}}}V^{T}=V\cdot V^{T}=I\\
+V\left(\Sigma^{T}\Sigma\right)^{-1}V^{T}\cdot X^{T}X=V\left(\Sigma^{T}\Sigma\right)^{-1}\underset{I}{\underbrace{V^{T}\cdot V}}\Sigma^{T}\Sigma V^{T}=V\underset{I}{\underbrace{\left(\Sigma^{T}\Sigma\right)^{-1}\cdot\left(\Sigma^{T}\Sigma\right)}}V^{T}=V\cdot V^{T}=I
+\end{cases}
+\end{align*}
+
+\end_inset
+
+ And so 
+\begin_inset Formula 
+\begin{align*}
+\hat{w}=\left(X^{T}X\right)^{-1}X^{T}y=V\left(\Sigma^{T}\Sigma\right)^{-1}\underset{I}{\underbrace{V^{T}\cdot V}}\Sigma^{T}U^{T}\cdot y=V\left(\Sigma^{T}\Sigma\right)^{-1}\Sigma^{T}U^{T}\cdot y
+\end{align*}
+
+\end_inset
+
+We will demostrate now that 
+\begin_inset Formula $\left(\Sigma^{T}\Sigma\right)^{-1}\Sigma^{T}=\Sigma^{\dagger}$
+\end_inset
+
+ and by so prove the general solution from the recitation equals to the
+ one seen in class.
+\begin_inset Newline newline
+\end_inset
+
+Since 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is a diagonal matirx, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left(\Sigma^{T}\Sigma\right)_{i,j}^{-1}=\begin{cases}
+\sigma_{i}^{-2} & \sigma_{i}\neq0\\
+0 & \sigma_{i}=0
+\end{cases}$
+\end_inset
+
+ and so, 
+\begin_inset Formula $\left(\left(\Sigma^{T}\Sigma\right)^{-1}\Sigma^{T}\right)_{i,j}=\begin{cases}
+\sigma_{i}^{-2}\sigma_{i}=\sigma_{i}^{-1} & \sigma_{i}\neq0\\
+0\cdot\sigma_{i}=0 & \sigma_{i}=0
+\end{cases}=\Sigma^{\dagger}.$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Therefore, 
+\begin_inset Formula $\hat{w}=\left(X^{T}X\right)^{-1}X^{T}y=V\left(\Sigma^{T}\Sigma\right)^{-1}\Sigma^{T}U^{T}\cdot y=V\Sigma^{\dagger}U^{T}\cdot y=X^{\dagger}y$
+\end_inset
+
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate-Resume
+let 
+\begin_inset Formula $X\in\mathbb{R}^{m\times d},$
+\end_inset
+
+then 
+\begin_inset Formula $T_{X}:\mathbb{R}^{d}\rightarrow\mathbb{R}^{m}$
+\end_inset
+
+ is the respective linear transformation represented by 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+for 
+\begin_inset Formula $X^{T}X\in\mathbb{R}^{d\times d}$
+\end_inset
+
+ it holds that: 
+\begin_inset Formula 
+\begin{align*}
+X^{T}X\in\mathbb{R}^{d\times d}\text{ is invertible}\Leftrightarrow Ker\left(X^{T}X\right)=0\underset{q.1}{\Leftrightarrow}Ker(X)=0\Leftrightarrow rank(X)\underset{\mathclap{\overbrace{\text{rank–nullity theorem }}}}{=}dim(\mathbb{R}^{d})-Ker(X)=d
+\end{align*}
+
+\end_inset
+
+ And therefore: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & rank(X)=dim\left(Span\left(x_{1},\dots,x_{m}\right)\right)=d\\
+\Leftrightarrow & Span\left(x_{1},\dots,x_{m}\right)=\mathbb{R}^{d}
+\end{align*}
+
+\end_inset
+
+ As stated 
+\begin_inset Formula $X^{T}X\in\mathbb{R}^{d\times d}\text{ is invertible}\Leftrightarrow Span\left(x_{1},\dots,x_{m}\right)=\mathbb{R}^{d}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate-Resume
+Let us define 
+\begin_inset Formula $\hat{w}=X^{\dagger}y$
+\end_inset
+
+, and let 
+\begin_inset Formula $\overline{w}\in\mathbb{R}^{d}$
+\end_inset
+
+ be another solution of the linear equations set 
+\begin_inset Formula $X^{T}Xw=X^{T}y$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+We have seen in recitation that 
+\begin_inset Formula $X=U\Sigma V^{T}=\begin{bmatrix}U_{\mathcal{R}} & U_{\mathcal{N}}\end{bmatrix}\begin{bmatrix}\mathcal{S} & 0\\
+0 & 0
+\end{bmatrix}\begin{bmatrix}V_{\mathcal{R}}^{T}\\
+V_{\mathcal{N}}^{T}
+\end{bmatrix}=U_{\mathcal{R}}\mathcal{S}V_{\mathcal{R}}^{T}=\tilde{U}\tilde{\Sigma}\tilde{V}^{T}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathcal{S}$
+\end_inset
+
+ is a diagonal invertible 
+\begin_inset Formula $r\times r$
+\end_inset
+
+ matrix.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, each 
+\begin_inset Formula $w$
+\end_inset
+
+ that solves 
+\begin_inset Formula $X^{T}Xw=X^{T}y$
+\end_inset
+
+ must be of form 
+\begin_inset Formula $w=\tilde{V}\tilde{\Sigma}^{-1}\hat{U}^{T}y$
+\end_inset
+
+ where 
+\begin_inset Formula $\tilde{V}\tilde{\Sigma}^{-1}\hat{U}^{T}$
+\end_inset
+
+ could each be padded into the original 
+\begin_inset Formula $SVD$
+\end_inset
+
+ decomposition dimentions.
+\begin_inset Newline newline
+\end_inset
+
+Let us note that under this notation, 
+\begin_inset Formula $\hat{w}=V\Sigma^{\dagger}U^{T}y$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{w}=\begin{bmatrix}V_{\mathcal{R}} & V_{\mathcal{N}}\end{bmatrix}\begin{bmatrix}\mathcal{S}^{-1} &  &  &  & 0\\
+ & \sigma_{r+1} &  &  & 0\\
+ &  & \ddots &  & 0\\
+ &  &  & \sigma_{d} & 0
+\end{bmatrix}\begin{bmatrix}U_{\mathcal{R}}^{T}\\
+U_{\mathcal{N}}^{T}
+\end{bmatrix}$
+\end_inset
+
+, therefore also 
+\begin_inset Formula $\forall i\in\left[r\right]$
+\end_inset
+
+ 
+\begin_inset Formula $\hat{w}_{i}=\overline{w}_{i}$
+\end_inset
+
+ and it holds that: 
+\begin_inset Formula 
+\begin{align*}
+||\overline{w}||^{2}\underset{\text{pythegorean theorem}}{=}\sum_{i=1}^{d}\overline{w}_{i}^{2}=\sum_{i=1}^{r}\overline{w}_{i}^{2}+\sum_{i=r+1}^{d}\overline{w}_{i}^{2}\ge\sum_{i=1}^{r}\overline{w}_{i}^{2}+\sum_{i=r+1}^{d}0=\sum_{i=1}^{r}\hat{w}_{i}^{2}+\sum_{i=r+1}^{d}0=||\hat{w}||^{2}
+\end{align*}
+
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $||\hat{w}||\le||\overline{w}||$
+\end_inset
+
+ for each 
+\begin_inset Formula $\overline{w}$
+\end_inset
+
+ solution of 
+\begin_inset Formula $X^{T}Xw=X^{T}y$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Practical Questions
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+13.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{enumi}{13}
+\end_layout
+
+\end_inset
+
+First, we can note the categorical features of the dataset include the following
+ features: 
+\begin_inset Formula $waterfront,view,condition,grade,zipcode,lat,long$
+\end_inset
+
+, while 
+\begin_inset Formula $waterfront,view,condition,grade$
+\end_inset
+
+ are simple boolean values or ordinal values, they are already already encoded
+ as a needed for us, thus it is left to us to decide on the proper handling
+ of 
+\begin_inset Formula $zipcode,lat$
+\end_inset
+
+ and 
+\begin_inset Formula $long$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+In the preprocessing process I have also clustered some non-categorical
+ features, such as 
+\begin_inset Formula $yr\_built$
+\end_inset
+
+ and 
+\begin_inset Formula $yr\_renovated$
+\end_inset
+
+, and transformed them into categorical dummy values in order to allow the
+ model to better deal with theirs illinearity.
+\begin_inset Newline newline
+\end_inset
+
+Next, I have also broken up 
+\begin_inset Formula $"sqft\_basement$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ into another binary column stating wether a basement exists, and using
+ the passed time between the last renovation/building I've stated in 
+\begin_inset Formula $"is\_new$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ wether the building is relatively new (providing the linear model with
+ the ability to take into account the combination of 
+\begin_inset Formula $"yr\_build"$
+\end_inset
+
+ and 
+\begin_inset Formula $"yr\_renovated"$
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+Lastly, in order to allow the model to 
+\begin_inset Quotes eld
+\end_inset
+
+understand
+\begin_inset Quotes erd
+\end_inset
+
+ geolocation, I have tupled a rough estimation of the latitude and longtitude
+ data into a single column, 
+\begin_inset Formula $"location"$
+\end_inset
+
+ which is in and of itself a categorical feature of an area (roughly 10km
+ in diameter).
+\begin_inset Newline newline
+\end_inset
+
+I have then encoded those new 
+\begin_inset Formula $"zipcode","location","yr\_built","yr\_renovated"$
+\end_inset
+
+ features using one-hot encoding.
+\end_layout
+
+\begin_layout Enumerate
+Scree-plot of non-categoric design matrix:
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure-14.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Scree-Plot of the design matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+We note the data seems to have some close to linearliy dependent features
+ since part of the singular values are close to zero.
+ This indicated the model would probably function well using a subset of
+ the features available to us, and might generalize better if we do so (using
+ just 5-10 features).
+\begin_inset Newline newline
+\end_inset
+
+Furthermore, the high singular values are corresponding to a singular-vector
+ which, as we have proven, is one of the features vectors, and thus those
+ values correspond to important features for the model's prediciton.
+\end_layout
+
+\begin_layout Enumerate
+Plotting the training progress as a factor of 
+\begin_inset Formula $p$
+\end_inset
+
+ - the percent of the training dataset used we note that the 
+\begin_inset Formula $MSE$
+\end_inset
+
+ tends to be higher, and less stable when a smaller portion of the dataset
+ is used to fit the model, and as 
+\begin_inset Formula $p$
+\end_inset
+
+'s value surpasses 
+\begin_inset Formula $20\%$
+\end_inset
+
+ we can see the 
+\begin_inset Formula $MSE$
+\end_inset
+
+ settling towards it's minimum point, with only minur improvments to the
+ models accuracy.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, we can conclude that fitting this model requires a minimum of
+ around 3.5 thousand samples in order to porducde a somewhat credible estimator.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure-16.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+MSE plot by training set size
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+We notice by looking at the correlation coefficent of each feature in relation
+ to the response vector that 
+\begin_inset Formula $"sqft\_living"$
+\end_inset
+
+ and 
+\begin_inset Formula $"grade"$
+\end_inset
+
+ columns, with respective coefficents of 
+\begin_inset Formula $0.68$
+\end_inset
+
+, and 
+\begin_inset Formula $0.66$
+\end_inset
+
+, seem very benefical to the model as their linear correlation with the
+ response vector, described by their pearson correlation is close to 1,
+ thus both rise and fall in unison with the response vector.
+ This hipotesis is backed by the plots of both features against the response
+ vector showing a rather clear linear relation.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure-17-sqft_living.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $"sqft\_living"$
+\end_inset
+
+ vs 
+\begin_inset Formula $"price"$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure-17-grade.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $"grade"$
+\end_inset
+
+ vs 
+\begin_inset Formula $"price"$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+As opposed to these columns, the 
+\begin_inset Formula $"condition"$
+\end_inset
+
+ column has a pearson correlation coefficient of only 
+\begin_inset Formula $0.05$
+\end_inset
+
+, thus indicating there's not much of a linear relation ship between the
+ 
+\begin_inset Formula $"condition"$
+\end_inset
+
+ column and the response vector, and as such, this column seems less beneficial
+ for the linear regression model's prediction
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure-17-condition.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $"condition"$
+\end_inset
+
+ vs 
+\begin_inset Formula $"price"$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
