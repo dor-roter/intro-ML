@@ -72,16 +72,41 @@ class Network(object):
         gradient descent using backpropagation to a single mini batch.
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
+        xs, ys = mini_batch.T
+        xs = np.vstack(xs).astype(np.float64).reshape((-1, self.sizes[0], 1))
+        ys = np.vstack(ys).astype(np.float64).reshape((-1, self.sizes[-1], 1))
+        delta_nabla_b, delta_nabla_w = self.backprop_batch(xs, ys)
+        self.weights = [w - eta*np.mean(nw, axis=0) for w, nw in zip(self.weights, delta_nabla_w)]
+        self.biases = [b - eta*np.mean(nb, axis=0) for b, nb in zip(self.biases, delta_nabla_b)]
+
+    def backprop_batch(self, xs, ys):
+        """
+        xs each *column* is x_i
+        :param xs:
+        :param ys:
+        :return:
+        """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
-        for x, y in mini_batch:
-            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
-            nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-            nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-        factor = eta / len(mini_batch)
-        self.weights = [w - factor*nw for w, nw in zip(self.weights, nabla_w)]
-        self.biases = [b - factor*nb for b, nb in zip(self.biases, nabla_b)]
+        # forward pass
+        activation = xs
+        activations = [xs]  # list to store all the activations, layer by layer
+        zs = []  # list to store all the z vectors, layer by layer
+        for b, w in zip(self.biases, self.weights):
+            zs.append(w @ activation + b)
+            activation = sigmoid(zs[-1])
+            activations.append(activation)
+
+        # backward pass
+        delta = self.cost_derivative(activations[-1], ys) * f_sigmoid_prime(activations[-1])
+        nabla_w[-1] = delta @ activations[-2].transpose((0, 2, 1))
+        nabla_b[-1] = delta
+        for t in range(self.num_layers - 2, 0, -1):
+            delta = f_sigmoid_prime(activations[t]) * (self.weights[t].T @ delta)
+            nabla_w[t - 1] = delta @ activations[t - 1].transpose((0, 2, 1))
+            nabla_b[t - 1] = delta
+        return nabla_b, nabla_w
 
     def backprop(self, x, y):
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
