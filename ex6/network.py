@@ -8,8 +8,8 @@ using backpropagation.
 """
 
 #### Libraries
-import random
 import numpy as np
+import cupy as cp
 
 
 class Network(object):
@@ -27,12 +27,13 @@ class Network(object):
         ever used in computing the outputs from later layers."""
         self.num_layers = len(sizes)
         self.sizes = sizes
-        self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)
+        self.biases = [cp.array(cp.random.randn(y, 1)) for y in sizes[1:]]
+        self.weights = [cp.array(cp.random.randn(y, x))
                         for x, y in zip(sizes[:-1], sizes[1:])]
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
+        a = cp.array(a)
         for b, w in zip(self.biases, self.weights):
             a = sigmoid(w @ a + b)
         return a
@@ -73,11 +74,11 @@ class Network(object):
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
         xs, ys = mini_batch.T
-        xs = np.vstack(xs).astype(np.float64).reshape((-1, self.sizes[0], 1))
-        ys = np.vstack(ys).astype(np.float64).reshape((-1, self.sizes[-1], 1))
+        xs = cp.array(cp.vstack(xs).astype(np.float64).reshape((-1, self.sizes[0], 1)))
+        ys = cp.array(cp.vstack(ys).astype(np.float64).reshape((-1, self.sizes[-1], 1)))
         delta_nabla_b, delta_nabla_w = self.backprop_batch(xs, ys)
-        self.weights = [w - eta*np.mean(nw, axis=0) for w, nw in zip(self.weights, delta_nabla_w)]
-        self.biases = [b - eta*np.mean(nb, axis=0) for b, nb in zip(self.biases, delta_nabla_b)]
+        self.weights = [w - eta * cp.mean(nw, axis=0) for w, nw in zip(self.weights, delta_nabla_w)]
+        self.biases = [b - eta * cp.mean(nb, axis=0) for b, nb in zip(self.biases, delta_nabla_b)]
 
     def backprop_batch(self, xs, ys):
         """
@@ -86,8 +87,8 @@ class Network(object):
         :param ys:
         :return:
         """
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
+        nabla_b = [cp.zeros(b.shape) for b in self.biases]
+        nabla_w = [cp.zeros(w.shape) for w in self.weights]
 
         # forward pass
         activation = xs
@@ -108,54 +109,39 @@ class Network(object):
             nabla_b[t - 1] = delta
         return nabla_b, nabla_w
 
-    def backprop(self, x, y):
-        """Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient for the cost function C_x.  ``nabla_b`` and
-        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-        to ``self.biases`` and ``self.weights``."""
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
-
-        # forward pass
-        activation = x
-        activations = [x]  # list to store all the activations, layer by layer
-        zs = []  # list to store all the z vectors, layer by layer
-        for b, w in zip(self.biases, self.weights):
-            zs.append(w @ activation + b)
-            activation = sigmoid(zs[-1])
-            activations.append(activation)
-
-        # backward pass
-        delta = self.cost_derivative(activations[-1], y) * f_sigmoid_prime(activations[-1])
-        nabla_w[-1] = delta @ activations[-2].T
-        nabla_b[-1] = delta
-        for t in range(self.num_layers-2, 0, -1):
-            delta = f_sigmoid_prime(activations[t]) * (self.weights[t].T @ delta)
-            nabla_w[t-1] = delta @ activations[t-1].T
-            nabla_b[t-1] = delta
-        return nabla_b, nabla_w
-
-    def evaluate(self, test_data):
+    def evaluate(self, test_data, split=2):
         """Return the number of test inputs for which the neural
         network outputs the correct result. Note that the neural
         network's output is assumed to be the index of whichever
         neuron in the final layer has the highest activation."""
-        return np.sum([np.argmax(self.feedforward(sample[0])) == sample[1] for sample in test_data])
+        size = int(len(test_data) / split)
+        mini_batch_split = np.arange(size, len(test_data), size)
+        mini_batches = np.split(test_data, mini_batch_split)
+        total = 0
+
+        for mini_batch in mini_batches:
+            xs, ys = np.array(mini_batch).T
+            xs = cp.array(cp.vstack(xs).astype(np.float64).reshape((-1, self.sizes[0], 1)))
+            ys = cp.array(ys.astype(np.int64))
+            total += cp.sum(cp.argmax(self.feedforward(xs), axis=(1, 2)) == ys)
+        return total
 
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""
-        return 2*(output_activations - y)
+        return 2 * (output_activations - y)
 
 
 #### Miscellaneous functions
 def sigmoid(z):
     """The sigmoid function."""
-    return 1 / (1 + np.exp(-z))
+    return 1 / (1 + cp.exp(-z))
+
 
 def f_sigmoid_prime(sig):
-    return sig * (1-sig)
+    return sig * (1 - sig)
+
 
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
-    return np.exp(-z) / ((1 + np.exp(-z)) ** 2)
+    return cp.exp(-z) / ((1 + cp.exp(-z)) ** 2)

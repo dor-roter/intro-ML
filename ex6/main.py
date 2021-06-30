@@ -17,6 +17,7 @@ def hyper_param_selection(training_data, test_data):
 
     for batch_size in batch_sizes:
         net = network.Network([784, 64, 64, 10])
+        net.evaluate(test_data)
         accuracies.append(net.SGD(training_data, epochs=3, mini_batch_size=batch_size, eta=3, test_data=test_data))
 
     for i in range(1, len(batch_sizes)):
